@@ -3,10 +3,15 @@
  */
 
 import {TumblrClient} from '../../api';
-import {NAME, LOAD_POSTS} from './consts';
+import {NAME, LOAD_POSTS, LOADING, POST_LIKE} from './consts';
 
-export const test = () => {
+export const loadPosts = () => {
     return (dispatch, getState) => {
+
+        dispatch({
+            type: LOADING,
+            status: true
+        });
 
         let prevState = getState();
 
@@ -19,8 +24,37 @@ export const test = () => {
                     posts: data.posts
                 }
             });
+
+            dispatch({
+                type: LOADING,
+                status: false
+            });
         })
     };
 };
 
+export const toggleLikePost = (post) => {
+    return (dispatch, getState) => {
 
+        post.liked ?
+            TumblrClient.unlikePost({
+                id: post.id,
+                reblog_key: post.reblog_key
+            }, () => {
+            })
+            :
+            TumblrClient.likePost({
+                id: post.id,
+                reblog_key: post.reblog_key
+            }, () => {
+            });
+
+        dispatch({
+            type: POST_LIKE,
+            payloads: {
+                post: post,
+                value: !post.liked
+            }
+        })
+    }
+};

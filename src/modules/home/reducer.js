@@ -3,9 +3,8 @@
  */
 
 import {ListView} from 'react-native';
-
 import {handleActions} from 'redux-actions';
-import {LOAD_POSTS} from './consts';
+import {LOAD_POSTS, LOADING, POST_LIKE} from './consts';
 import _ from 'lodash';
 
 const initialState = {
@@ -17,7 +16,6 @@ const initialState = {
     size: 20
 };
 
-
 export default handleActions({
     [LOAD_POSTS]: (state, action) => {
         let newPosts = _.concat(state.posts, action.payloads.posts);
@@ -27,6 +25,30 @@ export default handleActions({
             page: state.page + 1,
             posts: newPosts,
             dataSource: state.ds.cloneWithRows(newPosts)
+        };
+    },
+
+    [LOADING]: (state, action) => {
+        return {
+            ...state,
+            loading: action.status
+        }
+    },
+
+    [POST_LIKE]: (state, action) => {
+        let post = action.payloads.post;
+        let value = action.payloads.value;
+
+        let newArray = _.cloneDeep(state.posts);
+        let index = _.indexOf(state.posts, post);
+
+        post.liked = value;
+        newArray[index] = post;
+
+        return {
+            ...state,
+            posts: newArray,
+            dataSource: state.ds.cloneWithRows(newArray)
         };
     }
 }, initialState);

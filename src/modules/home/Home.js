@@ -3,44 +3,34 @@
  */
 
 import React, {Component, PropTypes} from 'react';
-import {
-    View,
-    StyleSheet,
-    ActivityIndicator,
-    StatusBar,
-    ListView,
-    Dimensions,
-    Text
-} from 'react-native';
-import _ from 'lodash';
+import {StyleSheet, ActivityIndicator, StatusBar, ListView} from 'react-native';
 
-
-import {TumblrClient} from '../../api';
-import PostView from '../../components/Post';
+import {Post} from '../../components/Post';
 
 import {connect} from 'react-redux'
 import * as actions from './actions';
 
 
 const Home = (props) => {
-    const {loadPosts, loading, dataSource} = props;
+    const {loadPosts, loading, dataSource, toggleLike} = props;
 
     return (
-        <View>
+        <ListView style={styles.HomeView}
+                  dataSource={dataSource}
+                  renderRow={(rowData) => <Post post={rowData} toggleLike={toggleLike}></Post>}
+                  renderFooter={() => <ActivityIndicator animating={loading} />}
+                  enableEmptySections={true}
+                  onEndReached={() => {
+                      console.log('reached end');
+                      loadPosts()
+                  }}>
             <StatusBar barStyle="light-content"/>
-            <ListView style={styles.TimeLine}
-                      dataSource={dataSource}
-                      renderRow={(rowData) => <PostView post={rowData}></PostView>}
-                      renderFooter={() => <ActivityIndicator animating={loading} />}
-                      enableEmptySections={true}
-                      onEndReached={() => loadPosts()}>
-            </ListView>
-        </View>
+        </ListView>
     )
-}
+};
 
-let styles = StyleSheet.create({
-    TimeLine: {
+const styles = StyleSheet.create({
+    HomeView: {
         backgroundColor: '#374A60'
     }
 });
@@ -61,6 +51,7 @@ export default connect(
         size: state.home.size
     }),
     (dispatch) => ({
-        loadPosts: () => dispatch(actions.test())
+        loadPosts: () => dispatch(actions.loadPosts()),
+        toggleLike: (post) => dispatch(actions.toggleLikePost(post))
     })
 )(Home)

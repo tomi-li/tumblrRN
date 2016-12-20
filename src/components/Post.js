@@ -3,120 +3,52 @@
  */
 
 
-import React, {Component} from 'react';
-import {StyleSheet, View, TouchableHighlight, Text, Dimensions, Button, WebView, Image} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Text, Dimensions, WebView, Image} from 'react-native';
+import {IconButton} from './IconButton';
+import {TextButton} from './TextButton';
 import {Actions} from 'react-native-router-flux';
-import {TumblrClient} from '../api';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
 import _ from 'lodash';
 
-export default class Post extends Component {
+export const Post = (props) => {
 
-    componentWillMount() {
-        // console.log(thixs.props.post);
-    }
+    const {post, toggleLike} =  props;
+    const {width, scale} = Dimensions.get('window');
+    const postBody = getPostBody(post, width);
 
-    test() {
-        // console.log('test')
-    }
+    return (
+        <View style={styles.post}>
+            <View style={styles.post_head}>
+                <TextButton
+                    textStyles={styles.post_head_title}
+                    onPress={() => Actions.detail({postName: post.blog_name})}>{post.blog_name}</TextButton>
+                <IconButton onPress={()=>{}} size={18} name="share-alt"/>
+            </View>
 
-    toggleLike() {
-        this.props.post.liked ?
-            TumblrClient.unlikePost({
-                id: this.props.post.id,
-                reblog_key: this.props.post.reblog_key
-            }, (err, data) => {
-                console.log(err);
-                console.log(data);
-            })
-            :
-            TumblrClient.likePost({
-                id: this.props.post.id,
-                reblog_key: this.props.post.reblog_key
-            }, (err, data) => {
-                console.log(err);
-                console.log(data);
-            })
-    }
+            <View style={styles.post_body}>
+                {postBody}
+            </View>
 
-    render() {
-        let {width, scale} = Dimensions.get('window');
-
-        let postBody;
-
-        console.log(this.props.post);
-
-        switch(this.props.post.type) {
-            case 'photo':
-                let fittedImage = _.map(this.props.post.photos, photo => {
-                    return _.reduce(photo.alt_sizes, (prev, curr) => {
-                        return (Math.abs(curr.width - width) < Math.abs(prev.width - width) ? curr : prev);
-                    })
-                });
-
-                postBody = _.map(fittedImage, image => {
-                    let ratio = image.width / image.height;
-                    let imageWidth = width - 10;
-                    let imageHeight = (width - 10) / ratio;
-                    let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5};
-
-                    return <Image
-                        key={image.url}
-                        resizeMode='contain'
-                        style={imageStyle}
-                        source={{ uri : image.url }}/>
-                });
-
-                break;
-            case 'video':
-                postBody = <Video
-                    style={{ width: null, height: 200 }}
-                    source={{uri: this.props.post.video_url}}/>;
-                break;
-            case 'text':
-                postBody = <WebView source={{html : 'this.props.post.body'}}/>;
-                break;
-            case 'link':
-                postBody = <Text>{this.props.post.url}</Text>;
-                break;
-            default :
-                console.warn(`unhandled type ${this.props.post.type}`)
-        }
-
-        return (
-            <View style={styles.post}>
-                <View style={styles.post_head}>
-                    <TouchableHighlight onPress={() => Actions.detail({ postName: this.props.post.blog_name})}>
-                        <Text style={styles.post_head_title}>{this.props.post.blog_name}</Text>
-                    </TouchableHighlight>
-
-                    <TouchableHighlight onPress={this.test}><Icon size={18} name="share-alt"></Icon></TouchableHighlight>
-                </View>
-
-                <View style={styles.post_body}>
-                    {postBody}
-                </View>
-
-                <View style={styles.post_foot}>
-                    <Text style={styles.post_foot_notes}>{this.props.post.note_count} notes</Text>
-                    <View style={styles.post_foot_buttons}>
-                        <TouchableHighlight style={styles.post_foot_buttons_button}><Icon size={18} color='#B5B5B5' name="share"></Icon></TouchableHighlight>
-                        <TouchableHighlight onPress={this.toggleLike.bind(this)} style={styles.post_foot_buttons_button}><Icon size={18} color={this.props.post.liked ? 'red':'#B5B5B5'} name="heart"></Icon></TouchableHighlight>
-                    </View>
+            <View style={styles.post_foot}>
+                <TextButton onPress={() => {}} textStyles={styles.post_foot_notes}>{post.note_count + 'notes'}</TextButton>
+                <View style={styles.post_foot_buttons}>
+                    <IconButton style={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="share"/>
+                    <IconButton style={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name="heart"/>
                 </View>
             </View>
-        )
-    }
-}
+        </View>
+    )
+};
 
 Post.PropTypes = {
     // Required
     'post': React.PropTypes.any.isRequired,
-
+    'toggleLike': React.PropTypes.func.isRequired
 };
 
-let styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
     'post': {
         marginTop: 20
     },
@@ -166,3 +98,48 @@ let styles = StyleSheet.create({
         marginLeft: 16
     }
 });
+
+
+function getPostBody(post: Object, width: Number) {
+    let postBody;
+
+    switch(post.type) {
+        case 'photo':
+            let fittedImage = _.map(post.photos, photo => {
+                return _.reduce(photo.alt_sizes, (prev, curr) => {
+                    return (Math.abs(curr.width - width) < Math.abs(prev.width - width) ? curr : prev);
+                })
+            });
+
+            postBody = _.map(fittedImage, image => {
+                let ratio = image.width / image.height;
+                let imageWidth = width - 10;
+                let imageHeight = (width - 10) / ratio;
+                let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5};
+
+                return <Image
+                    key={image.url}
+                    resizeMode='contain'
+                    style={imageStyle}
+                    source={{ uri : image.url }}/>
+            });
+
+            break;
+        case 'video':
+            postBody = <Video
+                style={{ width: null, height: 200 }}
+                source={{uri: post.video_url}}/>;
+            break;
+        case 'text':
+        case 'answer':
+            postBody = <WebView source={{html : 'post.body'}}/>;
+            break;
+        case 'link':
+            postBody = <Text>{post.url}</Text>;
+            break;
+
+        default :
+            console.warn(`unhandled type ${post.type}`)
+    }
+    return postBody;
+}

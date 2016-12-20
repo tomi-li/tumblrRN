@@ -9,6 +9,7 @@ import promise from 'redux-promise'
 import createLogger from 'redux-logger'
 
 import home from '../modules/home';
+import main from '../modules/main';
 
 export default function configureStore(initialState: any = undefined) {
     const logger = createLogger();
@@ -16,7 +17,8 @@ export default function configureStore(initialState: any = undefined) {
         applyMiddleware(thunk, promise, logger)
     );
     const rootReducer = combineReducers({
-        [home.NAME]: home.reducers
+        [home.NAME]: home.reducers,
+        [main.NAME]: main.reducers
     });
     return createStore(rootReducer, initialState, enhancer);
 }

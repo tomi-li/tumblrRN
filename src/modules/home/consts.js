@@ -8,4 +8,4 @@ export const NAME = 'home';
 //action types
 export const LOAD_POSTS = `${NAME}/LOAD_POSTS`;
 export const LOADING = `${NAME}/LOADING`;
-
+export const POST_LIKE = `${NAME}/POST_LIKE`;

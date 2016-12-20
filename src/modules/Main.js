@@ -5,10 +5,11 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TabBarIOS, Platform, StatusBar} from 'react-native';
-import Icon from 'react-native-vector-icons/Foundation';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Camera from 'react-native-camera';
 
 import home from './home';
+
 
 
 export default class Main extends Component {
@@ -23,6 +24,7 @@ export default class Main extends Component {
 
     render() {
         return (
+
             <TabBarIOS
                 barTintColor="#334459"
                 tintColor="#FFFFFF"
@@ -44,7 +46,7 @@ export default class Main extends Component {
                 </Icon.TabBarItemIOS>
                 <Icon.TabBarItemIOS
                     iconName="pencil"
-                    title="New"
+                    title="Post"
                     selected={this.state.selectedTab === 'PostTab'}
                     onPress={() => {this.setTab('PostTab')}}>
                     <View style={styles.tabContent}>
@@ -55,17 +57,17 @@ export default class Main extends Component {
                     </View>
                 </Icon.TabBarItemIOS>
                 <Icon.TabBarItemIOS
+                    iconName="comment"
+                    title="Chat"
+                    selected={this.state.selectedTab === 'ChatTab'}
+                    onPress={() => this.setTab('ChatTab')}>
+                    <View style={styles.tabContent}><Text style={styles.tabText}>tab Four</Text></View>
+                </Icon.TabBarItemIOS>
+                <Icon.TabBarItemIOS
                     iconName="torso"
                     title="Profile"
                     selected={this.state.selectedTab === 'ProfileTab'}
                     onPress={() => this.setTab('ProfileTab')}>
-                    <View style={styles.tabContent}><Text style={styles.tabText}>tab Four</Text></View>
-                </Icon.TabBarItemIOS>
-                <Icon.TabBarItemIOS
-                    iconName="mountains"
-                    title="Unknown"
-                    selected={this.state.selectedTab === 'Message'}
-                    onPress={() => this.setTab('Message')}>
                     <View style={styles.tabContent}><Text style={styles.tabText}>tab Five</Text></View>
                 </Icon.TabBarItemIOS>
             </TabBarIOS>
