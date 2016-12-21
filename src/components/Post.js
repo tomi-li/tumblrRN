@@ -50,7 +50,7 @@ Post.PropTypes = {
 
 const styles = StyleSheet.create({
     'post': {
-        marginBottom: 20
+        marginBottom: 22
     },
     'post_body': {
         backgroundColor: '#ffffff',
@@ -105,7 +105,7 @@ function getPostBody(post: Object, width: Number) {
                 let ratio = image.width / image.height;
                 let imageWidth = width;
                 let imageHeight = width / ratio;
-                let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5, backgroundColor: '#aaaaaa'};
+                let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5, backgroundColor: '#cccccc'};
 
                 return <Image
                     key={image.url}

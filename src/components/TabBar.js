@@ -4,7 +4,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-import {View, StyleSheet, Dimensions, TouchableHighlight} from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableHighlight, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Foundation';
 
 import {PostModal} from './PostModal';
@@ -37,7 +37,7 @@ export const TabBar = (props) => {
     const tabArray = renderTabs(switchTab, currentTab, openNewPostModal);
 
     return (
-        <View style={{width: deviceDimension.width, height: deviceDimension.height}}>
+        <View style={styles.mainContainer}>
             <View style={styles.tabContent}>{children}</View>
             <PostModal modalVisible={popupVisible} close={closeNewPostModal}/>
             <View style={styles.tabBar}>{tabArray}</View>
@@ -82,6 +82,10 @@ TabBar.propTypes = {
 
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        width: deviceDimension.width,
+        height: Platform.OS === 'ios' ? deviceDimension.height : deviceDimension.height - 24
+    },
     tabBar: {
         width: deviceDimension.width,
         position: 'absolute',
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
         width: deviceDimension.width,
         height: deviceDimension.height - 52,
         position: 'absolute',
-        paddingTop: 20, // status bar,
+        paddingTop: Platform.OS === 'ios' ? 20 : 0, // status bar,
         backgroundColor: '#374A60'
     }
 });

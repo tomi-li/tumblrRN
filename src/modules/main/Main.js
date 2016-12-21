@@ -20,7 +20,7 @@ const Main = (props) => {
             closeNewPostModal={closeNewPostModal}
             openNewPostModal={openNewPostModal}>
 
-            <StatusBar barStyle="light-content"/>
+            <StatusBar barStyle="light-content" backgroundColor='#374A60'/>
             <View style={currentTab ==='Home' ?styles.visiable : styles.invisiable}>
                 <home.Home />
             </View>

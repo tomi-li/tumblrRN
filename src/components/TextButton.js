@@ -29,6 +29,6 @@ TextButton.PropTypes = {
 
 const styles = StyleSheet.create({
     TextButton: {
-        padding: 4
+        padding: 8
     }
 });
