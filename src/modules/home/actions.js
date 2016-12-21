@@ -8,12 +8,15 @@ import {NAME, LOAD_POSTS, LOADING, POST_LIKE} from './consts';
 export const loadPosts = () => {
     return (dispatch, getState) => {
 
+        let prevState = getState();
+
+        // if already loading. skip
+        if (prevState.loading) return;
+
         dispatch({
             type: LOADING,
             status: true
         });
-
-        let prevState = getState();
 
         TumblrClient.userDashboard({
             offset: prevState[NAME].page * prevState[NAME].size

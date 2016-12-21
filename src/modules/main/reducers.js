@@ -7,6 +7,7 @@ import * as consts from './consts';
 
 const initialState = {
     currentTab: 'Home',
+    popupVisible: false
 };
 
 export default handleActions({
@@ -15,6 +16,17 @@ export default handleActions({
             ...state,
             currentTab: action.tab
         }
+    },
+    [consts.CLOSE_NEW_POST_MODAL]: (state, action) => {
+        return {
+            ...state,
+            popupVisible: false
+        }
+    },
+    [consts.OPEN_NEW_POST_MODAL]: (state, action) => {
+        return {
+            ...state,
+            popupVisible: true
+        }
     }
 }, initialState);
-

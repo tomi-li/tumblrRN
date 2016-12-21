@@ -33,8 +33,8 @@ export const Post = (props) => {
             <View style={styles.post_foot}>
                 <TextButton onPress={() => {}} textStyles={styles.post_foot_notes}>{post.note_count + 'notes'}</TextButton>
                 <View style={styles.post_foot_buttons}>
-                    <IconButton style={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="share"/>
-                    <IconButton style={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name="heart"/>
+                    <View style={styles.post_foot_buttons_button}><IconButton iconStyle={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="share"/></View>
+                    <View style={styles.post_foot_buttons_button}><IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name="heart"/></View>
                 </View>
             </View>
         </View>
@@ -50,37 +50,27 @@ Post.PropTypes = {
 
 const styles = StyleSheet.create({
     'post': {
-        marginTop: 20
+        marginBottom: 20
     },
     'post_body': {
         backgroundColor: '#ffffff',
-        marginHorizontal: 5,
     },
     'post_head': {
-        marginHorizontal: 8,
-        paddingHorizontal: 15,
+        paddingHorizontal: 12,
         height: 46,
         backgroundColor: 'white',
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
-        borderColor: '#647081',
-        borderWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     'post_head_title': {
+        color: '#333333',
         fontWeight: 'bold'
     },
     'post_foot': {
-        marginHorizontal: 10,
-        paddingHorizontal: 15,
+        paddingHorizontal: 12,
         height: 50,
-        backgroundColor: '#F7F7F7',
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
-        borderColor: '#647081',
-        borderWidth: 1,
+        backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -95,7 +85,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     'post_foot_buttons_button': {
-        marginLeft: 16
+        marginLeft: 30
     }
 });
 
@@ -113,9 +103,9 @@ function getPostBody(post: Object, width: Number) {
 
             postBody = _.map(fittedImage, image => {
                 let ratio = image.width / image.height;
-                let imageWidth = width - 10;
-                let imageHeight = (width - 10) / ratio;
-                let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5};
+                let imageWidth = width;
+                let imageHeight = width / ratio;
+                let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5, backgroundColor: '#aaaaaa'};
 
                 return <Image
                     key={image.url}

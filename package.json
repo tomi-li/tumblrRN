@@ -1,7 +1,9 @@
 {
-  "name": "tumblrRN",
-  "version": "0.0.1",
-  "private": true,
+  "name": "Tumblr-React-Native-App",
+  "version": "0.0.2",
+  "author": "lishuo.tomi@gmail.com",
+  "description": "Tumblr React Native app. just a demo project to test the best way to construct a react native app",
+  "private": false,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",

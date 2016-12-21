@@ -3,7 +3,7 @@
  */
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, ActivityIndicator,  ListView} from 'react-native';
+import {StyleSheet, ActivityIndicator, ListView} from 'react-native';
 
 import {Post} from '../../components/Post';
 
@@ -19,25 +19,14 @@ const Home = (props) => {
     }
 
     return (
-        <ListView style={styles.HomeView}
-                  dataSource={dataSource}
+        <ListView dataSource={dataSource}
                   renderRow={(rowData) => <Post post={rowData} toggleLike={toggleLike}></Post>}
                   renderFooter={() => <ActivityIndicator animating={loading} />}
                   enableEmptySections={true}
-                  onEndReached={() => {
-                      console.log('reached end');
-                      loadPosts()
-                  }}>
-
+                  onEndReached={() => {loadPosts()}}>
         </ListView>
     )
 };
-
-const styles = StyleSheet.create({
-    HomeView: {
-        backgroundColor: '#374A60'
-    }
-});
 
 
 Home.propsType = {

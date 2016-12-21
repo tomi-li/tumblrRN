@@ -4,8 +4,10 @@
 
 import _ from 'lodash';
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions, TouchableHighlight} from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/Foundation';
+
+import {PostModal} from './PostModal';
 
 const tabs = [
     {
@@ -31,33 +33,39 @@ const deviceDimension = Dimensions.get('window');
 
 export const TabBar = (props) => {
 
-    const {switchTab, children, currentTab} = props;
-    const tabArray = renderTabs(switchTab, currentTab);
+    const {switchTab, children, currentTab, popupVisible, openNewPostModal, closeNewPostModal} = props;
+    const tabArray = renderTabs(switchTab, currentTab, openNewPostModal);
 
     return (
         <View style={{width: deviceDimension.width, height: deviceDimension.height}}>
-            <View style={styles.tabContent}>
-                {children}
-            </View>
-            <View style={styles.tabBar}>
-                {tabArray}
-            </View>
+            <View style={styles.tabContent}>{children}</View>
+            <PostModal modalVisible={popupVisible} close={closeNewPostModal}/>
+            <View style={styles.tabBar}>{tabArray}</View>
         </View>
     )
 
 };
 
-function renderTabs(switchTab, currentTab) {
-    return _.map(tabs, tab => {
-        console.log(_.merge({}, styles.tabCurrent, styles.tab));
-        console.log(tab);
-        console.log(currentTab);
+function renderTabs(switchTab, currentTab, openNewPostModal) {
+    return _.map(tabs, (tab, index) => {
         return (
-            <TouchableHighlight style={styles.tab} underlayColor='rgba(0,0,0,.2)' activeOpacity={.85} onPress={() => switchTab(tab.title)} key={tab.title}>
+            <TouchableHighlight
+                key={index}
+                style={styles.tab}
+                activeOpacity={.85}
+                underlayColor='transparent'
+                onPress={() => {
+                    if(tab.title === 'Post'){
+                        openNewPostModal()
+                    }else{
+                        switchTab(tab.title)
+                    }
+                }}>
+
                 <Icon
-                    style={tab.title === 'Post' ? styles.tabPencil : undefined}
+                    style={tab.title === 'Post' && styles.tabPencil}
                     name={tab.icon}
-                    size={30}
+                    size={32}
                     color={tab.title === currentTab ? '#FDFDFD' : '#9BA3AE'}/>
             </TouchableHighlight>
         )
@@ -66,7 +74,10 @@ function renderTabs(switchTab, currentTab) {
 
 TabBar.propTypes = {
     switchTab: React.PropTypes.func.isRequired,
-    currentTab: React.PropTypes.string.isRequired
+    currentTab: React.PropTypes.string.isRequired,
+    popupVisible: React.PropTypes.bool.isRequired,
+    closeNewPostModal: React.PropTypes.func.isRequired,
+    openNewPostModal: React.PropTypes.func.isRequired
 };
 
 
@@ -96,6 +107,8 @@ const styles = StyleSheet.create({
     tabContent: {
         width: deviceDimension.width,
         height: deviceDimension.height - 52,
-        position: 'absolute'
+        position: 'absolute',
+        paddingTop: 20, // status bar,
+        backgroundColor: '#374A60'
     }
 });
