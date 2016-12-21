@@ -3,7 +3,7 @@
  */
 import  React from 'react';
 import {connect} from "react-redux";
-import {View, Text} from 'react-native';
+import {View, StatusBar, Text} from 'react-native';
 import * as actions from './actions';
 
 import home  from '../home';
@@ -14,14 +14,14 @@ const Main = (props) => {
     const content = renderContent(currentTab);
 
     return (
-        <TabBar switchTab={switchTab}>
+        <TabBar switchTab={switchTab} currentTab={currentTab}>
+            <StatusBar barStyle="light-content"/>
             {content}
         </TabBar>
     )
 };
 
 function renderContent(currentTab) {
-    console.log(currentTab);
     switch(currentTab) {
         case 'Home':
             return <home.Home />;

@@ -128,6 +128,7 @@ function getPostBody(post: Object, width: Number) {
         case 'video':
             postBody = <Video
                 style={{ width: null, height: 200 }}
+                paused={true}
                 source={{uri: post.video_url}}/>;
             break;
         case 'text':

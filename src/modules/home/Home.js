@@ -3,7 +3,7 @@
  */
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, ActivityIndicator, StatusBar, ListView} from 'react-native';
+import {StyleSheet, ActivityIndicator,  ListView} from 'react-native';
 
 import {Post} from '../../components/Post';
 
@@ -13,6 +13,10 @@ import * as actions from './actions';
 
 const Home = (props) => {
     const {loadPosts, loading, dataSource, toggleLike} = props;
+
+    if (dataSource.getRowCount() === 0) {
+        loadPosts()
+    }
 
     return (
         <ListView style={styles.HomeView}
@@ -24,7 +28,7 @@ const Home = (props) => {
                       console.log('reached end');
                       loadPosts()
                   }}>
-            <StatusBar barStyle="light-content"/>
+
         </ListView>
     )
 };

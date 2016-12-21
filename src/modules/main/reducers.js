@@ -6,7 +6,7 @@ import {handleActions} from 'redux-actions';
 import * as consts from './consts';
 
 const initialState = {
-    currentTab: 'HomeTab',
+    currentTab: 'Home',
 };
 
 export default handleActions({
