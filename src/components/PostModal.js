@@ -52,8 +52,8 @@ function renderButton(centralPoint) {
             offsetY = (radius * Math.cos(toRadians(angleStep * (index - 1)))).toFixed(3);
         }
 
-        console.log(parseInt(x) - parseInt(offsetX));
-        console.log(parseInt(y) - parseInt(offsetY));
+        // console.log(parseInt(x) - parseInt(offsetX));
+        // console.log(parseInt(y) - parseInt(offsetY));
 
         return (
             <View style={[styles.button_container, {left : parseInt(x) + parseInt(offsetX), top : parseInt(y) - parseInt(offsetY)}]} key={index}>

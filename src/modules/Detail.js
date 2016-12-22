@@ -4,9 +4,10 @@
 
 
 import React, {Component} from 'react';
-import {ScrollView, Text, StyleSheet, Platform, Image} from 'react-native';
+import {Button, ScrollView, Text, StyleSheet, Platform, Image} from 'react-native';
 import {TumblrClient} from '../api';
 import _ from 'lodash';
+import {back} from '../router';
 
 export default class Detail extends Component {
 
@@ -17,7 +18,7 @@ export default class Detail extends Component {
     };
 
     componentWillMount() {
-        TumblrClient.blogPosts(this.props.postName, (err, data) => {
+        TumblrClient.blogPosts(this.props.blogName, (err, data) => {
             console.log(data);
             this.setState(data)
         })
@@ -39,7 +40,7 @@ export default class Detail extends Component {
         return (
             <ScrollView style={styles.NavigatedView}>
                 <Text> NAME: {this.state.blog.title}</Text>
-                {postNodes}
+                <Button title="back" onPress={back}></Button>
             </ScrollView>
         )
     }

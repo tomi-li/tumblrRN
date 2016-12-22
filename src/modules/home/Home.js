@@ -14,10 +14,6 @@ import * as actions from './actions';
 const Home = (props) => {
     const {loadPosts, loading, dataSource, toggleLike} = props;
 
-    if (dataSource.getRowCount() === 0) {
-        loadPosts()
-    }
-
     return (
         <ListView dataSource={dataSource}
                   renderRow={(rowData) => <Post post={rowData} toggleLike={toggleLike}></Post>}

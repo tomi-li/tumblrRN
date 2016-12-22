@@ -11,6 +11,8 @@
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i"
   },
   "dependencies": {
+    "@exponent/ex-navigation": "^2.4.0",
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "flow-bin": "0.36.0",
     "lodash": "4.17.2",
     "react": "15.4.1",

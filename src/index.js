@@ -4,27 +4,26 @@
 
 
 import React, {Component} from 'react'
-import {Router, Scene} from 'react-native-router-flux'
-import {Provider, connect} from 'react-redux'
-import configureStore from './store/configureStore';
-
-import Main from './modules/Main';
-import Test from './modules/main';
-import Detail from './modules/Detail'
-
-const RouterWithRedux = connect()(Router);
-const store = configureStore();
+import {Provider} from 'react-redux'
+import {Store}from './store';
 
 
+import {createRouter, NavigationProvider, StackNavigation, NavigationContext} from '@exponent/ex-navigation';
+import {Router} from './router';
 
-export default class TumblrRN extends Component {
+
+const navigationContext = new NavigationContext({
+    router: Router,
+    store: Store,
+});
+
+export default class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                <RouterWithRedux>
-                    <Scene key='Main' hideNavBar={true} component={Test.Main} title='Main'/>
-                    <Scene key='detail' hideNavBar={false} component={Detail} title='Detail'/>
-                </RouterWithRedux>
+            <Provider store={Store}>
+                <NavigationProvider context={navigationContext}>
+                    <StackNavigation initialRoute='home'/>
+                </NavigationProvider>
             </Provider>
         )
     }

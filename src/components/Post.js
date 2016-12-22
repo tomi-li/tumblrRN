@@ -7,9 +7,9 @@ import React from 'react';
 import {StyleSheet, View, Text, Dimensions, WebView, Image} from 'react-native';
 import {IconButton} from './IconButton';
 import {TextButton} from './TextButton';
-import {Actions} from 'react-native-router-flux';
 import Video from 'react-native-video';
 import _ from 'lodash';
+import {go} from '../router';
 
 export const Post = (props) => {
 
@@ -22,7 +22,7 @@ export const Post = (props) => {
             <View style={styles.post_head}>
                 <TextButton
                     textStyles={styles.post_head_title}
-                    onPress={() => Actions.detail({postName: post.blog_name})}>{post.blog_name}</TextButton>
+                    onPress={ () => go('detail',{blogName: post.blog_name})}>{post.blog_name}</TextButton>
                 <IconButton onPress={()=>{}} size={18} name="share-alt"/>
             </View>
 
