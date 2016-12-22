@@ -10,6 +10,7 @@ import {createNavigationEnabledStore, NavigationReducer} from '@exponent/ex-navi
 
 import home from './modules/home';
 import main from './modules/main';
+import post from './modules/post';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
     createStore,
@@ -24,7 +25,8 @@ function configureStore(initialState: any = undefined) {
     const rootReducer = combineReducers({
         navigation: NavigationReducer,
         [home.NAME]: home.reducers,
-        [main.NAME]: main.reducers
+        [main.NAME]: main.reducers,
+        [post.NAME]: post.reducers
     });
     return createStoreWithNavigation(rootReducer, initialState, enhancer);
 }

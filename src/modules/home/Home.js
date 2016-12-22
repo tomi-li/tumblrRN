@@ -3,7 +3,7 @@
  */
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, ActivityIndicator, ListView} from 'react-native';
+import {StyleSheet, ActivityIndicator, ListView, RefreshControl, Dimensions, RecyclerViewBackedScrollView} from 'react-native';
 
 import {Post} from '../../components/Post';
 
@@ -14,16 +14,23 @@ import * as actions from './actions';
 const Home = (props) => {
     const {loadPosts, loading, dataSource, toggleLike} = props;
 
+
     return (
-        <ListView dataSource={dataSource}
-                  renderRow={(rowData) => <Post post={rowData} toggleLike={toggleLike}></Post>}
-                  renderFooter={() => <ActivityIndicator animating={loading} />}
-                  enableEmptySections={true}
-                  onEndReached={() => {loadPosts()}}>
+        <ListView
+            style={{backgroundColor:'#374A60', paddingTop: 22}}
+            dataSource={dataSource}
+            renderRow={(rowData) => <Post post={rowData} toggleLike={toggleLike}/>}
+            renderFooter={() => <ActivityIndicator animating={loading}/>}
+            enableEmptySections={true}
+            onEndReached={loadPosts}
+            renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
+            onLayout={() => {
+                if (dataSource.getRowCount() === 0) loadPosts()
+            }}
+        >
         </ListView>
     )
 };
-
 
 Home.propsType = {
     loading: PropTypes.bool.isRequired,

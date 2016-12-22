@@ -3,52 +3,72 @@
  */
 import  React from 'react';
 import {connect} from "react-redux";
-import {View, StatusBar, Text, StyleSheet} from 'react-native';
-import * as actions from './actions';
-
-import home  from '../home';
-import {TabBar} from '../../components/TabBar';
+import {StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/Foundation';
+import {StackNavigation, TabNavigation, TabNavigationItem as TabItem,} from '@exponent/ex-navigation';
 
 const Main = (props) => {
-    const {currentTab, switchTab, popupVisible, closeNewPostModal, openNewPostModal} = props;
 
     return (
-        <TabBar
-            switchTab={switchTab}
-            currentTab={currentTab}
-            popupVisible={popupVisible}
-            closeNewPostModal={closeNewPostModal}
-            openNewPostModal={openNewPostModal}>
+        <TabNavigation
+            initialTab="Home"
+            tabBarColor="#334459"
+            tabBarHeight={52}>
 
-            <StatusBar barStyle="light-content" backgroundColor='#374A60'/>
-            <View style={currentTab ==='Home' ?styles.visiable : styles.invisiable}>
-                <home.Home />
-            </View>
-            <View style={currentTab !=='Home' ?styles.visiable : styles.invisiable}>
-                <Text>{currentTab}</Text>
-            </View>
-        </TabBar>
+            <TabItem
+                id="Home"
+                renderIcon={isSelected => renderIcon('home', isSelected)}>
+                <StackNavigation initialRoute='home'/>
+            </TabItem>
+
+            <TabItem
+                id="Explore"
+                renderIcon={isSelected => renderIcon('compass', isSelected)}>
+                <StackNavigation initialRoute='detail'/>
+            </TabItem>
+
+            <TabItem
+                id="Post"
+                renderIcon={isSelected => renderIcon('pencil', isSelected)}>
+                <StackNavigation initialRoute='post'/>
+            </TabItem>
+
+            <TabItem
+                id="Message"
+                renderIcon={isSelected => renderIcon('comment', isSelected)}>
+                <StackNavigation initialRoute='detail'/>
+            </TabItem>
+
+            <TabItem
+                id="Profile"
+                renderIcon={isSelected => renderIcon('torso', isSelected)}>
+                <StackNavigation initialRoute='detail'/>
+            </TabItem>
+
+        </TabNavigation>
     )
 };
 
-export default connect(
-    (state) => ({
-        currentTab: state.main.currentTab,
-        popupVisible: state.main.popupVisible
-    }),
-    (dispatch) => ({
-        switchTab: (tab) => dispatch(actions.switchTab(tab)),
-        closeNewPostModal: () => dispatch(actions.closeNewPostModal()),
-        openNewPostModal: () => dispatch(actions.openNewPostModal())
-    })
-)(Main);
+function renderIcon(iconName: string, isSelected: bool): ReactElement<any> {
+    let color = isSelected ? '#FDFDFD' : '#9BA3AE';
 
+    return (
+        <Icon name={iconName} size={32} color={color} style={ iconName ==='pencil' && styles.tabPencil}/>
+    );
+}
 
 const styles = StyleSheet.create({
-    visiable: {
-        height: null
-    },
-    invisiable: {
-        height: 0
+    tabPencil: {
+        paddingVertical: 1,
+        paddingHorizontal: 12,
+        borderRadius: 5,
+        backgroundColor: '#529ECD',
+        overflow: 'hidden',
+        color: '#334459'
     }
 });
+
+export default connect(
+    (state) => ({}),
+    (dispatch) => ({})
+)(Main);

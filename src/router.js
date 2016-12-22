@@ -3,15 +3,18 @@
  */
 
 import {NavigationActions, createRouter} from '@exponent/ex-navigation';
+
 import {Store} from './store';
-
-
 import main from './modules/main';
-import detail from './modules/Detail'
+import detail from './modules/Detail';
+import home from './modules/home';
+import post from './modules/post';
 
 export const Router = createRouter(() => ({
-    home: () => main.Main,
-    detail: () => detail
+    main: () => main.Main,
+    home: () => home.Home,
+    detail: () => detail,
+    post: () => post.Post
 }));
 
 export const go = (name, params = {}) => {

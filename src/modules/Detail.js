@@ -18,6 +18,9 @@ export default class Detail extends Component {
     };
 
     componentWillMount() {
+        if(!this.props.blogName){
+            return;
+        }
         TumblrClient.blogPosts(this.props.blogName, (err, data) => {
             console.log(data);
             this.setState(data)

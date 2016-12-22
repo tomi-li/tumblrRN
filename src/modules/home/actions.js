@@ -39,6 +39,14 @@ export const loadPosts = () => {
 export const toggleLikePost = (post) => {
     return (dispatch, getState) => {
 
+        dispatch({
+            type: POST_LIKE,
+            payloads: {
+                post: post,
+                value: !post.liked
+            }
+        });
+
         post.liked ?
             TumblrClient.unlikePost({
                 id: post.id,
@@ -52,12 +60,5 @@ export const toggleLikePost = (post) => {
             }, () => {
             });
 
-        dispatch({
-            type: POST_LIKE,
-            payloads: {
-                post: post,
-                value: !post.liked
-            }
-        })
     }
 };

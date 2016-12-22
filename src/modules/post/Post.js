@@ -5,13 +5,17 @@
 import React from 'react';
 import {StyleSheet, Modal, View, Text, Dimensions, Button, TouchableHighlight, LayoutAnimation, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import * as actions from './actions';
 import _ from 'lodash';
+import {connect} from "react-redux";
 
 const deviceDimension = Dimensions.get('window');
 
-export const PostModal = (props) => {
+const PostModal = (props) => {
 
-    const {modalVisible, close} = props;
+    const {modalVisible, close, open} = props;
+
+    console.log(props);
 
     // LayoutAnimation.linear();
     const x = deviceDimension.width / 2 - 35;
@@ -24,7 +28,7 @@ export const PostModal = (props) => {
                 {buttons}
 
                 <TouchableHighlight underlayColor='rgba(0,0,0,.2)' style={styles.closeButton} onPress={close}>
-                    <Text style={styles.closeButtonColor}>Nevermind</Text>
+                    <Text style={styles.closeButtonColor}> Nevermind </Text>
                 </TouchableHighlight>
             </View>
         </Modal>
@@ -51,9 +55,6 @@ function renderButton(centralPoint) {
             offsetX = (radius * Math.sin(toRadians(angleStep * (index - 1)))).toFixed(3);
             offsetY = (radius * Math.cos(toRadians(angleStep * (index - 1)))).toFixed(3);
         }
-
-        // console.log(parseInt(x) - parseInt(offsetX));
-        // console.log(parseInt(y) - parseInt(offsetY));
 
         return (
             <View style={[styles.button_container, {left : parseInt(x) + parseInt(offsetX), top : parseInt(y) - parseInt(offsetY)}]} key={index}>
@@ -144,3 +145,14 @@ const buttons =
 function toRadians(angle) {
     return angle * (Math.PI / 180);
 }
+
+
+export default connect(
+    (state) => ({
+        modalVisible: state.post.modalVisible
+    }),
+    (dispatch) => ({
+        close: () => dispatch(actions.closeNewPostModal()),
+        open: () => dispatch(actions.openNewPostModal())
+    })
+)(PostModal)

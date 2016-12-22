@@ -2,15 +2,13 @@
  * All Codes below are Lifetime Warranted by Tomi since 12/12/2016.
  */
 
-
 import React, {Component} from 'react'
 import {Provider} from 'react-redux'
-import {Store}from './store';
+import {StatusBar} from 'react-native';
+import {NavigationProvider, StackNavigation, NavigationContext} from '@exponent/ex-navigation';
 
-
-import {createRouter, NavigationProvider, StackNavigation, NavigationContext} from '@exponent/ex-navigation';
 import {Router} from './router';
-
+import {Store}from './store';
 
 const navigationContext = new NavigationContext({
     router: Router,
@@ -22,7 +20,8 @@ export default class App extends Component {
         return (
             <Provider store={Store}>
                 <NavigationProvider context={navigationContext}>
-                    <StackNavigation initialRoute='home'/>
+                    <StatusBar backgroundColor='#374A60' barStyle="light-content" translucent={true}/>
+                    <StackNavigation initialRoute='main'/>
                 </NavigationProvider>
             </Provider>
         )
