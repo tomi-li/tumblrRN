@@ -4,41 +4,49 @@
 
 
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, WebView, Image} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, WebView, Image, ScrollView} from 'react-native';
 import {IconButton} from './IconButton';
 import {TextButton} from './TextButton';
 import Video from 'react-native-video';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
 import {go} from '../router';
+
 
 export const Post = (props) => {
 
     const {post, toggleLike} =  props;
     const {width, scale} = Dimensions.get('window');
-    const postBody = getPostBody(post, width);
+    const postBody = renderBody(post, width);
+    const postTags = renderTags(post.tags);
+    const postHeaderTrail = renderPostHeaderTrail(post.trail);
 
+    console.log(postHeaderTrail);
     console.log(post);
 
     return (
         <View style={styles.post}>
             <View style={styles.post_head}>
-                <TextButton
-                    textStyles={styles.post_head_title}
-                    onPress={ () => go('detail',{blogName: post.blog_name})}>{post.blog_name}</TextButton>
+                <Image style={styles.post_head_avatar} source={{uri: `https://api.tumblr.com/v2/blog/${post.blog_name}/avatar/`}}/>
+                <View style={styles.post_head_titles}>
+                    <TextButton
+                        textStyles={styles.post_head_title}
+                        onPress={ () => go('detail',{blogName: post.blog_name})}>{post.blog_name}</TextButton>
+                    {postHeaderTrail}
+                </View>
             </View>
 
             <View style={styles.post_body}>
                 {postBody}
             </View>
 
-            <View>
-                <Text>Source:</Text>
-                <TextButton onPress={() => go('detail', {blogName: post.source_title})}>{post.source_title}</TextButton>
-
-            </View>
+            <ScrollView horizontal={true}>
+                <TextButton color="#B5B5B5" onPress={() => go('detail', {blogName: post.source_title})}>Source: {post.source_title}</TextButton>
+                {postTags}
+            </ScrollView>
 
             <View style={styles.post_foot}>
-                <TextButton onPress={() => {}} textStyles={styles.post_foot_notes}>{post.note_count + ' notes'}</TextButton>
+                <TextButton onPress={() => {}} textStyles={styles.post_foot_notes} color="#B5B5B5">{post.note_count + ' notes'}</TextButton>
                 <View style={styles.post_foot_buttons}>
                     <View style={styles.post_foot_buttons_button}>
                         <IconButton iconStyle={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="paper-plane-o"/>
@@ -70,17 +78,57 @@ const styles = StyleSheet.create({
         marginBottom: 22,
         backgroundColor: '#ffffff',
     },
-    'post_body': {},
+    'post_body_link_url': {
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        backgroundColor: '#eeeeee',
+        color: '#999999',
+        fontSize: 12
+    },
+    'post_body_text': {
+        paddingHorizontal: 10,
+        paddingVertical: 4
+    },
+    'post_body_source_and_tag': {
+        flexDirection: 'row'
+    },
+    'post_body_trail': {
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    'post_body_trail_text': {
+        fontWeight: 'bold'
+    },
+    'post_body_trail_avatar': {
+        width: 24,
+        height: 24,
+        borderRadius: 2
+    },
     'post_head': {
         paddingHorizontal: 12,
-        height: 46,
+        height: 56,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+    },
+    'post_head_avatar': {
+        width: 36,
+        height: 36,
+        borderRadius: 2
+    },
+    'post_head_titles': {
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     'post_head_title': {
         color: '#333333',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 14,
+        padding: 0
+    },
+    'post_head_subtitle': {
+        color: '#cccccc'
     },
     'post_foot': {
         paddingHorizontal: 12,
@@ -91,8 +139,7 @@ const styles = StyleSheet.create({
     },
     'post_foot_notes': {
         fontWeight: 'bold',
-        fontSize: 14,
-        color: '#B5B5B5'
+        fontSize: 14
     },
     'post_foot_buttons': {
         flexDirection: 'row',
@@ -104,22 +151,25 @@ const styles = StyleSheet.create({
 });
 
 
-function getPostBody(post: Object, width: Number) {
+// TODO all html content need to be render in HTMl. right now . just render in text wrapped in text
+function renderBody(post: Object, width: Number) {
     let postBody;
+    const postTrail = renderTrail(post.trail);
 
     switch(post.type) {
+
         case 'photo':
-            let fittedImage = _.map(post.photos, photo => {
+            const fittedImage = _.map(post.photos, photo => {
                 return _.reduce(photo.alt_sizes, (prev, curr) => {
                     return (Math.abs(curr.width - width) < Math.abs(prev.width - width) ? curr : prev);
                 })
             });
 
-            postBody = _.map(fittedImage, image => {
-                let ratio = image.width / image.height;
-                let imageWidth = width;
-                let imageHeight = width / ratio;
-                let imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5, backgroundColor: '#cccccc'};
+            const fittedImageElement = _.map(fittedImage, image => {
+                const ratio = image.width / image.height;
+                const imageWidth = width;
+                const imageHeight = width / ratio;
+                const imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5, backgroundColor: '#cccccc'};
 
                 return <Image
                     key={image.url}
@@ -128,23 +178,56 @@ function getPostBody(post: Object, width: Number) {
                     source={{ uri : image.url }}/>
             });
 
+            const linkElement = post.link_url && <Text style={styles.post_body_link_url}>{post.link_url}</Text>;
+
+            postBody =
+                <View>
+                    {fittedImageElement}
+                    {linkElement}
+                    {postTrail}
+                    <Text style={styles.post_body_text}>{post.summary}</Text>
+                </View>;
             break;
         case 'video':
-            postBody = <Video
+            return <Video
                 style={{ width: null, height: 200 }}
                 paused={true}
                 source={{uri: post.video_url}}/>;
-            break;
         case 'text':
         case 'answer':
-            postBody = <WebView source={{html : 'post.body'}}/>;
-            break;
+            return <Text>{post.summary}</Text>;
         case 'link':
-            postBody = <Text>{post.url}</Text>;
-            break;
-
+            return <Text>{post.url}</Text>;
         default :
-            console.warn(`unhandled type ${post.type}`)
+            console.warn(`unhandled type ${post.type}`);
+            return '';
     }
+
     return postBody;
+}
+
+function renderTags(tags: Array) {
+    return _.map(tags, tag => <TextButton color="#B5B5B5" key={tag} onPress={() => go('detail', {blogName: post.source_title})}>#{tag}</TextButton>)
+}
+
+function renderTrail(trail: Array) {
+    return _.map(trail, trailItem =>
+        <View style={styles.post_body_trail} key={trailItem.blog.name}>
+            <Image style={styles.post_body_trail_avatar} source={{uri: `https://api.tumblr.com/v2/blog/${trailItem.blog.name}/avatar/`}}/>
+            <TextButton textStyles={styles.post_body_trail_text} onPress={ () => go('detail',{blogName: trailItem.blog.name})}>{trailItem.blog.name}</TextButton>
+        </View>
+    )
+}
+
+function renderPostHeaderTrail(trail: Array) {
+    if (trail && trail.length > 0) {
+        return <TextButton
+            textStyles={styles.post_head_subtitle}
+            onPress={ () => go('detail',{blogName: trail[0].blog.name})}>
+            <Icon name="retweet"/> {trail[0].blog.name}
+        </TextButton>
+    } else {
+        return null
+    }
+
 }
