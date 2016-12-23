@@ -17,24 +17,41 @@ export const Post = (props) => {
     const {width, scale} = Dimensions.get('window');
     const postBody = getPostBody(post, width);
 
+    console.log(post);
+
     return (
         <View style={styles.post}>
             <View style={styles.post_head}>
                 <TextButton
                     textStyles={styles.post_head_title}
                     onPress={ () => go('detail',{blogName: post.blog_name})}>{post.blog_name}</TextButton>
-                <IconButton onPress={()=>{}} size={18} name="share-alt"/>
             </View>
 
             <View style={styles.post_body}>
                 {postBody}
             </View>
 
+            <View>
+                <Text>Source:</Text>
+                <TextButton onPress={() => go('detail', {blogName: post.source_title})}>{post.source_title}</TextButton>
+
+            </View>
+
             <View style={styles.post_foot}>
-                <TextButton onPress={() => {}} textStyles={styles.post_foot_notes}>{post.note_count + 'notes'}</TextButton>
+                <TextButton onPress={() => {}} textStyles={styles.post_foot_notes}>{post.note_count + ' notes'}</TextButton>
                 <View style={styles.post_foot_buttons}>
-                    <View style={styles.post_foot_buttons_button}><IconButton iconStyle={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="share"/></View>
-                    <View style={styles.post_foot_buttons_button}><IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name="heart"/></View>
+                    <View style={styles.post_foot_buttons_button}>
+                        <IconButton iconStyle={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="paper-plane-o"/>
+                    </View>
+                    <View style={styles.post_foot_buttons_button}>
+                        <IconButton iconStyle={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="comment-o"/>
+                    </View>
+                    <View style={styles.post_foot_buttons_button}>
+                        <IconButton iconStyle={styles.post_foot_buttons_button} onPress={()=>{}} size={18} color='#B5B5B5' name="retweet"/>
+                    </View>
+                    <View style={styles.post_foot_buttons_button}>
+                        <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name={post.liked ? 'heart' : 'heart-o'}/>
+                    </View>
                 </View>
             </View>
         </View>
@@ -50,15 +67,13 @@ Post.PropTypes = {
 
 const styles = StyleSheet.create({
     'post': {
-        marginBottom: 22
-    },
-    'post_body': {
+        marginBottom: 22,
         backgroundColor: '#ffffff',
     },
+    'post_body': {},
     'post_head': {
         paddingHorizontal: 12,
         height: 46,
-        backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -70,7 +85,6 @@ const styles = StyleSheet.create({
     'post_foot': {
         paddingHorizontal: 12,
         height: 50,
-        backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -85,7 +99,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     'post_foot_buttons_button': {
-        marginLeft: 30
+        marginLeft: 8
     }
 });
 

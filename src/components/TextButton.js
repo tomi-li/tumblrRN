@@ -12,7 +12,7 @@ export const TextButton = (props) => {
     return (
         <TouchableHighlight
             style={styles.TextButton}
-            onPress={() => onPress()}
+            onPress={onPress}
             underlayColor="transparent"
             activeOpacity={.7}>
             <Text style={textStyles}>{children}</Text>

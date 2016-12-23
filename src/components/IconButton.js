@@ -13,8 +13,8 @@ export const IconButton = (props) => {
     return (
         <TouchableHighlight
             style={styles.iconButton}
-            onPress={() => onPress()}
-            underlayColor="transparent"
+            onPress={onPress}
+            underlayColor="rgba(55,74,96, .1)"
             activeOpacity={.7}>
             <Icon size={size} name={name} color={color}/>
         </TouchableHighlight>
@@ -31,7 +31,7 @@ IconButton.PropTypes = {
 
 const styles = StyleSheet.create({
     iconButton: {
-        padding: 8
+        padding: 10
     }
 });
 

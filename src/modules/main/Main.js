@@ -24,7 +24,7 @@ const Main = (props) => {
             <TabItem
                 id="Explore"
                 renderIcon={isSelected => renderIcon('compass', isSelected)}>
-                <StackNavigation initialRoute='detail'/>
+                <StackNavigation initialRoute='home'/>
             </TabItem>
 
             <TabItem
@@ -36,13 +36,13 @@ const Main = (props) => {
             <TabItem
                 id="Message"
                 renderIcon={isSelected => renderIcon('comment', isSelected)}>
-                <StackNavigation initialRoute='detail'/>
+                <StackNavigation initialRoute='home'/>
             </TabItem>
 
             <TabItem
                 id="Profile"
                 renderIcon={isSelected => renderIcon('torso', isSelected)}>
-                <StackNavigation initialRoute='detail'/>
+                <StackNavigation initialRoute='home'/>
             </TabItem>
 
         </TabNavigation>
