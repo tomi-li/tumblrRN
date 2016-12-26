@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import {StyleSheet, Modal, View, Text, Dimensions, Button, TouchableHighlight, LayoutAnimation, Platform} from 'react-native';
+import {StyleSheet, Modal, View, Text, Dimensions, Button, TouchableHighlight, LayoutAnimation, Platform, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import * as actions from './actions';
 import _ from 'lodash';
@@ -13,25 +13,16 @@ const deviceDimension = Dimensions.get('window');
 
 const PostModal = (props) => {
 
-    const {modalVisible, close, open} = props;
+    const {animationButtons, buttons} = props;
 
     console.log(props);
 
-    // LayoutAnimation.linear();
-    const x = deviceDimension.width / 2 - 35;
-    const y = (Platform.OS === 'ios' ? deviceDimension.height : deviceDimension.height - 24) / 2 - 35;
-    const buttons = renderButton({x, y});
+    const buttonsEle = renderButton(buttons);
 
     return (
-        <Modal animationType='slide' visible={modalVisible} transparent={true} onRequestClose={() => {}}>
-            <View style={styles.modalStyle}>
-                {buttons}
-
-                <TouchableHighlight underlayColor='rgba(0,0,0,.2)' style={styles.closeButton} onPress={close}>
-                    <Text style={styles.closeButtonColor}> Nevermind </Text>
-                </TouchableHighlight>
-            </View>
-        </Modal>
+        <View style={styles.modalStyle} onLayout={() => animationButtons(buttons)}>
+            {buttonsEle}
+        </View>
     )
 
 };
@@ -41,28 +32,17 @@ PostModal.PropTypes = {
     close: React.PropTypes.func.isRequired
 };
 
-function renderButton(centralPoint) {
-    const angleStep = 360 / (buttons.length - 1);
-    const radius = 120;
-    const {x, y} = centralPoint;
+function renderButton(buttons) {
 
     const array = _.map(buttons, (button, index) => {
-        let offsetX, offsetY;
-        if (index === 0) {
-            offsetX = 0;
-            offsetY = 0;
-        } else {
-            offsetX = (radius * Math.sin(toRadians(angleStep * (index - 1)))).toFixed(3);
-            offsetY = (radius * Math.cos(toRadians(angleStep * (index - 1)))).toFixed(3);
-        }
 
         return (
-            <View style={[styles.button_container, {left : parseInt(x) + parseInt(offsetX), top : parseInt(y) - parseInt(offsetY)}]} key={index}>
+            <Animated.View style={[styles.button_container, {left : button.offset.x,  top: button.offset.y}]} key={index}>
                 <TouchableHighlight style={[styles.button, {backgroundColor : button.color}]}>
                     <Icon size={24} name={button.icon}/>
                 </TouchableHighlight>
                 <Text style={styles.button_text}>{button.text}</Text>
-            </View>
+            </Animated.View>
         )
     });
 
@@ -110,49 +90,14 @@ const styles = StyleSheet.create({
     }
 });
 
-
-const buttons =
-    [{
-        text: 'photo',
-        icon: 'camera',
-        color: '#D95E3F'
-    }, {
-        text: 'Chat',
-        icon: 'bubbles',
-        color: '#529ECD'
-    }, {
-        text: 'Quota',
-        icon: 'speech',
-        color: '#F1992D'
-    }, {
-        text: 'Link',
-        icon: 'link',
-        color: '#56BC8A'
-    }, {
-        text: 'Audio',
-        icon: 'earphones',
-        color: '#A67DC1'
-    }, {
-        text: 'Text',
-        icon: 'book-open',
-        color: '#FDFEFC'
-    }, {
-        text: 'Video',
-        icon: 'film',
-        color: '#73808A'
-    }];
-
-function toRadians(angle) {
-    return angle * (Math.PI / 180);
-}
-
-
 export default connect(
     (state) => ({
-        modalVisible: state.post.modalVisible
+        modalVisible: state.post.modalVisible,
+        buttons: state.post.buttons
     }),
     (dispatch) => ({
         close: () => dispatch(actions.closeNewPostModal()),
-        open: () => dispatch(actions.openNewPostModal())
+        open: () => dispatch(actions.openNewPostModal()),
+        animationButtons: (buttons) => dispatch(actions.animationButtons(buttons))
     })
-)(PostModal)
+)(PostModal);

@@ -5,5 +5,4 @@
 // name
 export const NAME = 'post';
 
-export const OPEN_NEW_POST_MODAL = `${NAME}/OPEN_NEW_POST_MODAL`;
-export const CLOSE_NEW_POST_MODAL = `${NAME}/CLOSE_NEW_POST_MODAL`;
+export const ANIMATION_BUTTONS = `${NAME}/ANIMATION_BUTTONS`;
