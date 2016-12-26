@@ -55,5 +55,10 @@ export default handleActions({
             ...state,
             buttons: action.buttons
         }
+    },
+    [consts.ANIMATION_BUTTON_PRESS]: (state, action) => {
+        return {
+            ...state
+        }
     }
 }, initialState);

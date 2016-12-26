@@ -13,11 +13,11 @@ const deviceDimension = Dimensions.get('window');
 
 const PostModal = (props) => {
 
-    const {animationButtons, buttons} = props;
+    const {animationButtons, buttons, animationOnPress} = props;
 
     console.log(props);
 
-    const buttonsEle = renderButton(buttons);
+    const buttonsEle = renderButton(buttons, animationOnPress);
 
     return (
         <View style={styles.modalStyle} onLayout={() => animationButtons(buttons)}>
@@ -27,18 +27,15 @@ const PostModal = (props) => {
 
 };
 
-PostModal.PropTypes = {
-    modalVisible: React.PropTypes.bool,
-    close: React.PropTypes.func.isRequired
-};
+PostModal.PropTypes = {};
 
-function renderButton(buttons) {
+function renderButton(buttons, animationOnPress) {
 
     const array = _.map(buttons, (button, index) => {
 
         return (
             <Animated.View style={[styles.button_container, {left : button.offset.x,  top: button.offset.y}]} key={index}>
-                <TouchableHighlight style={[styles.button, {backgroundColor : button.color}]}>
+                <TouchableHighlight style={[styles.button, {backgroundColor : button.color}]} onPress={() => animationOnPress(button)}>
                     <Icon size={24} name={button.icon}/>
                 </TouchableHighlight>
                 <Text style={styles.button_text}>{button.text}</Text>
@@ -96,8 +93,7 @@ export default connect(
         buttons: state.post.buttons
     }),
     (dispatch) => ({
-        close: () => dispatch(actions.closeNewPostModal()),
-        open: () => dispatch(actions.openNewPostModal()),
+        animationOnPress: (button) => dispatch(actions.buttonAnimationOnPress(button)),
         animationButtons: (buttons) => dispatch(actions.animationButtons(buttons))
     })
 )(PostModal);

@@ -42,3 +42,10 @@ export const animationButtons = (buttons) => {
         return angle * (Math.PI / 180);
     }
 };
+
+
+export const buttonAnimationOnPress = (button) => {
+    return {
+        type: consts.ANIMATION_BUTTON_PRESS
+    }
+};
