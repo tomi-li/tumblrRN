@@ -9,18 +9,21 @@ import main from './modules/main';
 import detail from './common';
 import home from './modules/home';
 import post from './modules/post';
+import newPost from './modules/newPost';
 
 export const Router = createRouter(() => ({
     main: () => main.Main,
     home: () => home.Home,
     detail: () => detail.BlogDetail,
-    post: () => post.Post
+    post: () => post.Post,
+    newTextPost: () => newPost.NewTextPost,
+    newImagePost: () => newPost.NewImagePost,
 }));
 
 export const go = (name, params = {}) => {
     console.debug('GO:', name, params);
     let navigatorUID = Store.getState().navigation.currentNavigatorUID;
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('detail', params)));
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(name, params)));
 };
 
 export const back = () => {

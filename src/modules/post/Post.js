@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import * as actions from './actions';
 import _ from 'lodash';
 import {connect} from "react-redux";
+import {go} from '../../router';
 
 const deviceDimension = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ function renderButton(buttons, animationOnPress) {
 
         return (
             <Animated.View style={[styles.button_container, {left : button.offset.x,  top: button.offset.y}]} key={index}>
-                <TouchableHighlight style={[styles.button, {backgroundColor : button.color}]} onPress={() => animationOnPress(button)}>
+                <TouchableHighlight style={[styles.button, {backgroundColor : button.color}]} onPress={() => go('newTextPost')}>
                     <Icon size={24} name={button.icon}/>
                 </TouchableHighlight>
                 <Text style={styles.button_text}>{button.text}</Text>

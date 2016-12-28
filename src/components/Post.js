@@ -211,8 +211,8 @@ function renderTags(tags: Array) {
 }
 
 function renderTrail(trail: Array) {
-    return _.map(trail, trailItem =>
-        <View style={styles.post_body_trail} key={trailItem.blog.name}>
+    return _.map(trail, (trailItem, index) =>
+        <View style={styles.post_body_trail} key={index}>
             <Image style={styles.post_body_trail_avatar} source={{uri: `https://api.tumblr.com/v2/blog/${trailItem.blog.name}/avatar/`}}/>
             <TextButton textStyles={styles.post_body_trail_text} onPress={ () => go('detail',{blogName: trailItem.blog.name})}>{trailItem.blog.name}</TextButton>
         </View>
