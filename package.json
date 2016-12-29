@@ -18,6 +18,7 @@
     "react": "15.4.1",
     "react-native": "0.39.2",
     "react-native-camera": "^0.4.0",
+    "react-native-camera-roll-picker": "^1.1.9",
     "react-native-image-progress": "^0.6.0",
     "react-native-progress": "^3.2.0",
     "react-native-router-flux": "3.37.0",

@@ -27,3 +27,33 @@ export const newTextPost = (title, body) => {
 
     }
 };
+
+
+export const newImagePost = (caption: String, images: Array) => {
+
+    return (dispatch, getState) => {
+
+        dispatch({
+            type: consts.LOADING
+        });
+
+        let formDate = new FormData();
+        formDate.append('type', 'photo');
+        formDate.append('caption', caption);
+        formDate.append('data', images);
+
+
+        TumblrClient.userInfo({}, (err, data) => {
+            if (!data) return;
+            const blogName = data.user.name;
+
+            console.log(formDate);
+
+            TumblrClient.createPost(blogName, formDate, (err, data) => {
+                console.log(err);
+                console.log(data);
+            })
+        });
+
+    }
+};
