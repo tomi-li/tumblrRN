@@ -4,4 +4,5 @@
 
 export const NAME = 'newPost';
 
+export const LOADING = `${NAME}/LOADING`;
 export const NEW_TEXT_POST = `${NAME}/TEXT_POST`;

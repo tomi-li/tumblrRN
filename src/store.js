@@ -11,7 +11,9 @@ import {createNavigationEnabledStore, NavigationReducer} from '@exponent/ex-navi
 import home from './modules/home';
 import main from './modules/main';
 import post from './modules/post';
+import newPost from './modules/newPost';
 import common from './common';
+
 
 const createStoreWithNavigation = createNavigationEnabledStore({
     createStore,
@@ -29,8 +31,18 @@ function configureStore(initialState: any = undefined) {
         [main.NAME]: main.reducers,
         [post.NAME]: post.reducers,
         [common.NAME]: common.reducers,
+        [newPost.NAME]: newPost.reducers,
     });
-    return createStoreWithNavigation(rootReducer, initialState, enhancer);
+    let store = createStoreWithNavigation(rootReducer, initialState, enhancer);
+
+    // if (module.hot) {
+    //     module.hot.accept(() => {
+    //         // const nextRootReducer = rootReducer.default;
+    //         store.replaceReducer(rootReducer);
+    //     });
+    // }
+
+    return store;
 }
 
 const Store = configureStore();

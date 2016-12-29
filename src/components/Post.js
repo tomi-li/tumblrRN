@@ -21,9 +21,6 @@ export const Post = (props) => {
     const postTags = renderTags(post.tags);
     const postHeaderTrail = renderPostHeaderTrail(post.trail);
 
-    console.log(postHeaderTrail);
-    console.log(post);
-
     return (
         <View style={styles.post}>
             <View style={styles.post_head}>
@@ -211,12 +208,12 @@ function renderTags(tags: Array) {
 }
 
 function renderTrail(trail: Array) {
-    return _.map(trail, (trailItem, index) =>
+    return _.last(_.map(trail, (trailItem, index) =>
         <View style={styles.post_body_trail} key={index}>
             <Image style={styles.post_body_trail_avatar} source={{uri: `https://api.tumblr.com/v2/blog/${trailItem.blog.name}/avatar/`}}/>
             <TextButton textStyles={styles.post_body_trail_text} onPress={ () => go('detail',{blogName: trailItem.blog.name})}>{trailItem.blog.name}</TextButton>
         </View>
-    )
+    ))
 }
 
 function renderPostHeaderTrail(trail: Array) {
