@@ -37,19 +37,15 @@ export const newImagePost = (caption: String, images: Array) => {
             type: consts.LOADING
         });
 
-        let formDate = new FormData();
-        formDate.append('type', 'photo');
-        formDate.append('caption', caption);
-        formDate.append('data', images);
-
-
         TumblrClient.userInfo({}, (err, data) => {
             if (!data) return;
             const blogName = data.user.name;
 
-            console.log(formDate);
-
-            TumblrClient.createPost(blogName, formDate, (err, data) => {
+            TumblrClient.createPost(blogName, {
+                type: 'photo',
+                caption: caption,
+                data64: images[0],
+            }, (err, data) => {
                 console.log(err);
                 console.log(data);
             })

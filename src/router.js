@@ -8,14 +8,13 @@ import {Store} from './store';
 import main from './modules/main';
 import detail from './common';
 import home from './modules/home';
-import post from './modules/post';
 import newPost from './modules/newPost';
 
 export const Router = createRouter(() => ({
     main: () => main.Main,
     home: () => home.Home,
     detail: () => detail.BlogDetail,
-    post: () => post.Post,
+    post: () => newPost.NewPost,
     newTextPost: () => newPost.NewTextPost,
     newImagePost: () => newPost.NewImagePost,
 }));

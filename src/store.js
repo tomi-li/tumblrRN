@@ -10,7 +10,6 @@ import {createNavigationEnabledStore, NavigationReducer} from '@exponent/ex-navi
 
 import home from './modules/home';
 import main from './modules/main';
-import post from './modules/post';
 import newPost from './modules/newPost';
 import common from './common';
 
@@ -29,7 +28,6 @@ function configureStore(initialState: any = undefined) {
         navigation: NavigationReducer,
         [home.NAME]: home.reducers,
         [main.NAME]: main.reducers,
-        [post.NAME]: post.reducers,
         [common.NAME]: common.reducers,
         [newPost.NAME]: newPost.reducers,
     });

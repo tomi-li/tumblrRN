@@ -5,7 +5,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 
-import {View, Text, CameraRoll, Platform, StyleSheet, Dimensions, Button, TextInput} from 'react-native';
+import {View, Text, CameraRoll, Platform, StyleSheet, Dimensions, Button, TextInput, NativeModules} from 'react-native';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 import Camera from 'react-native-camera';
 
@@ -29,14 +29,16 @@ class NewImagePost extends Component {
 
 
     turnUrlToFile(data) {
-        let formImages = data.map(each => {
-            return {
-                uri: each.uri,
-                type: 'image/jpeg',
-                name: each.filename,
-            }
+        let tempArray = [];
+        data.map(each => {
+            NativeModules.RNImageToBase64.getBase64String(each.uri, (err, base64) => {
+                tempArray.push(base64);
+                if (tempArray.length === data.length) {
+                    this.setState({images: tempArray})
+                }
+            })
         });
-        this.setState({images: formImages})
+
     }
 
     render() {
@@ -53,7 +55,8 @@ class NewImagePost extends Component {
                     <Text onPress={this._takePicture}>[CAPTURE]</Text>
                 </Camera>
                 <CameraRollPicker
-                    style={{ width: 200, height: 500}}
+                    maximum={1}
+                    containerWidth={Dimensions.get('window').width - 40}
                     callback={(data) => this.turnUrlToFile(data)}/>
             </View>
         )
@@ -69,6 +72,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#374A60',
         paddingTop: 22,
         paddingHorizontal: 20
+    },
+    photos: {
+        width: Dimensions.get('window').width - 40
     }
 });
 

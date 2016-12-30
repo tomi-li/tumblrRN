@@ -21,7 +21,7 @@ export default class App extends Component {
             <Provider store={Store}>
                 <NavigationProvider context={navigationContext}>
                     <StatusBar backgroundColor='#374A60' barStyle="light-content" translucent={true}/>
-                    <StackNavigation initialRoute='newImagePost'/>
+                    <StackNavigation initialRoute='main'/>
                 </NavigationProvider>
             </Provider>
         )
@@ -35,7 +35,7 @@ function setupFetchLogger() {
     global._fetch = fetch;
     global.fetch = function (uri, options, ...args) {
         return global._fetch(uri, options, ...args).then((response) => {
-            console.log(`%c ${options.method} %c ${uri}`, css, css, options.body, {more: {request: {options, ...args}, response}});
+            console.log(`%c ${options.method} %c${uri} `, css, css, options.body, {more: {request: {options, ...args}, response}});
             return response;
         });
     };
