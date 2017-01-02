@@ -22,7 +22,8 @@ const createStoreWithNavigation = createNavigationEnabledStore({
 function configureStore(initialState: any = undefined) {
     const logger = createLogger();
     const enhancer = compose(
-        applyMiddleware(thunk, logger)
+        // applyMiddleware(thunk, logger)
+        applyMiddleware(thunk)
     );
     const rootReducer = combineReducers({
         navigation: NavigationReducer,

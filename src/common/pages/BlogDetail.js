@@ -2,29 +2,58 @@
  * All Codes below are Lifetime Warranted by Tomi since 12/12/2016.
  */
 
-
 import React, {Component} from 'react';
 import {Button, ScrollView, Text, StyleSheet, Platform, Image, ActivityIndicator} from 'react-native';
 import {back} from '../../router';
 import {connect} from "react-redux";
-import * as actions from '../actions';
+import {TumblrClient} from '../../api';
 
-const BlogDetail = (props) => {
+class BlogDetail extends Component {
 
-    // from navigator
-    const {blogName} = props;
-    const {loading, loadBlog, blogContent} = props;
+    static PropTypes = {
+        blogName: React.PropTypes.string.isRequired
+    };
 
-    return (
-        <ScrollView
-            onLayout={() => loadBlog(blogName)}>
-            <Text> NAME: {blogName}</Text>
-            <ActivityIndicator animating={loading}/>
-            <Button title="back" onPress={back}/>
-            <Text>{blogContent}</Text>
-        </ScrollView>
-    )
-};
+    state = {
+        loading: false,
+        blog: {}
+    };
+
+    componentWillMount() {
+        const blogName = this.props.blogName;
+
+        this.setState({loading: true});
+        TumblrClient.blogPosts(blogName, (err, data) => {
+
+            console.log(data);
+
+            this.setState({
+                loading: false,
+                blog: data
+            });
+        })
+    }
+
+
+    render() {
+        const {blogName} = this.props;
+        const {loading} = this.state;
+        const {blog, posts, total_posts} = this.state.blog;
+
+        console.log(blog);
+        let temp  = JSON.stringify(blog);
+
+        return (
+            <ScrollView>
+                <Text> NAME: {blogName}</Text>
+                <ActivityIndicator animating={loading}/>
+                <Button title="back" onPress={back}/>
+                <Text>{temp}</Text>
+            </ScrollView>
+        )
+    }
+}
+
 
 BlogDetail.PropTypes = {
     blogName: React.PropTypes.string.isRequired,
@@ -33,11 +62,8 @@ BlogDetail.PropTypes = {
 
 
 export default connect(
-    (state) => ({
-        loading: state.common.loading,
-        blogContent: state.common.blogContent
-    }),
-    (dispatch) => ({
-        loadBlog: (blogName) => dispatch(actions.loadBlog(blogName))
-    })
+    (state) => ({}),
+    (dispatch) => ({})
 )(BlogDetail);
+
+
