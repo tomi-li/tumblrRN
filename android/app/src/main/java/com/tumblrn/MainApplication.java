@@ -1,12 +1,13 @@
-package com.tumblrrn;
+package com.tumblrn;
 
 import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.github.xfumihiro.react_native_image_to_base64.ImageToBase64Package;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -28,9 +29,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RCTCameraPackage(),
             new ReactVideoPackage(),
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+            new ImageToBase64Package(),
+            new RCTCameraPackage()
       );
     }
   };
