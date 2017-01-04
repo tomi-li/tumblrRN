@@ -3,20 +3,26 @@
  */
 
 import {NavigationActions, createRouter} from '@exponent/ex-navigation';
+
 import {Store} from './store';
-
-
 import main from './modules/main';
-import detail from './modules/Detail'
+import detail from './common';
+import home from './modules/home';
+import newPost from './modules/newPost';
 
 export const Router = createRouter(() => ({
-    home: () => main.Main,
-    detail: () => detail
+    main: () => main.Main,
+    home: () => home.Home,
+    detail: () => detail.BlogDetail,
+    post: () => newPost.NewPost,
+    newTextPost: () => newPost.NewTextPost,
+    newImagePost: () => newPost.NewImagePost,
 }));
 
 export const go = (name, params = {}) => {
+    console.debug('GO:', name, params);
     let navigatorUID = Store.getState().navigation.currentNavigatorUID;
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('detail', params)));
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(name, params)));
 };
 
 export const back = () => {

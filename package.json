@@ -1,5 +1,5 @@
 {
-  "name": "Tumblr-React-Native-App",
+  "name": "tumblrn",
   "version": "0.0.2",
   "author": "lishuo.tomi@gmail.com",
   "description": "Tumblr React Native app. just a demo project to test the best way to construct a react native app",
@@ -18,7 +18,9 @@
     "react": "15.4.1",
     "react-native": "0.39.2",
     "react-native-camera": "^0.4.0",
+    "react-native-camera-roll-picker": "^1.1.9",
     "react-native-image-progress": "^0.6.0",
+    "react-native-image-to-base64": "^0.1.0",
     "react-native-progress": "^3.2.0",
     "react-native-router-flux": "3.37.0",
     "react-native-vector-icons": "3.0.0",

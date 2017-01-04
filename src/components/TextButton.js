@@ -7,15 +7,15 @@ import {TouchableHighlight, Text, StyleSheet} from 'react-native';
 
 export const TextButton = (props) => {
 
-    const {onPress, textStyles, children} = props;
+    const {onPress, textStyles, color = '#333333', children} = props;
 
     return (
         <TouchableHighlight
             style={styles.TextButton}
-            onPress={() => onPress()}
+            onPress={onPress}
             underlayColor="transparent"
             activeOpacity={.7}>
-            <Text style={textStyles}>{children}</Text>
+            <Text style={[textStyles, {color: color}]}>{children}</Text>
         </TouchableHighlight>
     )
 };
@@ -23,12 +23,13 @@ export const TextButton = (props) => {
 
 TextButton.PropTypes = {
     onPress: React.PropTypes.func.isRequired,
-    textStyles: React.PropTypes.object.isRequired
+    textStyles: React.PropTypes.object.isRequired,
+    color: React.PropTypes.string
 };
 
 
 const styles = StyleSheet.create({
     TextButton: {
-        padding: 8
+        paddingHorizontal: 8
     }
 });
