@@ -186,10 +186,12 @@ function renderBody(post: Object, width: Number) {
                 </View>;
             break;
         case 'video':
-            return <Video
-                style={{ width: null, height: 200 }}
-                paused={true}
-                source={{uri: post.video_url}}/>;
+            if(!_.isEmpty(post.video_url)){
+                return <Video
+                    styles={{width: 100, height : 100}}
+                    paused={true}
+                    source={{uri: post.video_url}}/>;
+            }
         case 'text':
         case 'answer':
             return <Text>{post.summary}</Text>;

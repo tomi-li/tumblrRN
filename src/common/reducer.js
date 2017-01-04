@@ -15,7 +15,6 @@ export default handleActions({
     [consts.GET_BLOG_DETAIL]: (state, action) => {
         const payloads = action.payloads;
 
-        console.log(payloads);
         return {
             ...state,
             loading: payloads.loading,

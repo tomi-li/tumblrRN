@@ -21,7 +21,4 @@ let TumblrClient = tumblr.createClient({
     token_secret: 'jYg0SadaEMTtqwL70ozX8Pu7zgQfraPeEkEWpgksgl8Z5Egrja'
 });
 
-
-console.log('---------- API 初始化 ---------------------');
-
 export {TumblrClient}

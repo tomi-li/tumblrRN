@@ -25,8 +25,6 @@ class BlogDetail extends Component {
         this.setState({loading: true});
         TumblrClient.blogPosts(blogName, (err, data) => {
 
-            console.log(data);
-
             this.setState({
                 loading: false,
                 blog: data
@@ -40,7 +38,6 @@ class BlogDetail extends Component {
         const {loading} = this.state;
         const {blog, posts, total_posts} = this.state.blog;
 
-        console.log(blog);
         let temp  = JSON.stringify(blog);
 
         return (
