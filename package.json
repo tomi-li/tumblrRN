@@ -23,6 +23,7 @@
     "react-native-image-to-base64": "^0.1.0",
     "react-native-progress": "^3.2.0",
     "react-native-router-flux": "3.37.0",
+    "react-native-swiper": "^1.5.4",
     "react-native-vector-icons": "3.0.0",
     "react-native-video": "^0.9.0",
     "react-redux": "4.4.6",
