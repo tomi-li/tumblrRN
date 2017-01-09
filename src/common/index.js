@@ -7,10 +7,14 @@ import * as actions from './actions';
 import reducers from './reducer';
 import {NAME} from './consts';
 import BlogDetail from './pages/BlogDetail';
+import TagDetail from './pages/TagDetail';
+import {AccountDetail} from './pages/AccountDetail';
 
 export default {
     NAME,
     actions,
     reducers,
-    BlogDetail
+    BlogDetail,
+    TagDetail,
+    AccountDetail
 };

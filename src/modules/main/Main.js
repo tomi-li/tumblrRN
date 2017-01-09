@@ -42,7 +42,7 @@ const Main = (props) => {
             <TabItem
                 id="Profile"
                 renderIcon={isSelected => renderIcon('torso', isSelected)}>
-                <StackNavigation initialRoute='home'/>
+                <StackNavigation initialRoute='account'/>
             </TabItem>
 
         </TabNavigation>

@@ -6,17 +6,19 @@ import {NavigationActions, createRouter} from '@exponent/ex-navigation';
 
 import {Store} from './store';
 import main from './modules/main';
-import detail from './common';
+import common from './common';
 import home from './modules/home';
 import newPost from './modules/newPost';
 
 export const Router = createRouter(() => ({
     main: () => main.Main,
     home: () => home.Home,
-    detail: () => detail.BlogDetail,
+    detail: () => common.BlogDetail,
+    tagDetail: () => common.TagDetail,
     post: () => newPost.NewPost,
     newTextPost: () => newPost.NewTextPost,
     newImagePost: () => newPost.NewImagePost,
+    account: () => common.AccountDetail
 }));
 
 export const go = (name, params = {}) => {

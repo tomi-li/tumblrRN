@@ -3,7 +3,7 @@
  */
 
 
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, Dimensions, WebView, Image, ScrollView} from 'react-native';
 import {IconButton} from './IconButton';
 import {TextButton} from './TextButton';
@@ -66,7 +66,7 @@ export const Post = (props) => {
 Post.PropTypes = {
     // Required
     'post': React.PropTypes.any.isRequired,
-    'toggleLike': React.PropTypes.func.isRequired
+    'toggleLike': React.PropTypes.func
 };
 
 
@@ -206,7 +206,7 @@ function renderBody(post: Object, width: Number) {
 }
 
 function renderTags(tags: Array) {
-    return _.map(tags, tag => <TextButton color="#B5B5B5" key={tag} onPress={() => go('detail', {blogName: post.source_title})}>#{tag}</TextButton>)
+    return _.map(tags, tag => <TextButton color="#B5B5B5" key={tag} onPress={() => go('tagDetail', {tag: tag})}>#{tag}</TextButton>)
 }
 
 function renderTrail(trail: Array) {
