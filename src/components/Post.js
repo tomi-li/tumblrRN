@@ -186,7 +186,7 @@ function renderBody(post: Object, width: Number) {
                 </View>;
             break;
         case 'video':
-            if(!_.isEmpty(post.video_url)){
+            if (!_.isEmpty(post.video_url)) {
                 return <Video
                     styles={{width: 100, height : 100}}
                     paused={true}

@@ -10,7 +10,7 @@ import {TumblrClient} from '../../api';
 import Swiper from 'react-native-swiper';
 import {IconButton} from '../../components/IconButton';
 import {TextButton} from '../../components/TextButton';
-import * as _ from 'lodash';
+import {Post} from '../../components/Post';
 
 class BlogDetail extends Component {
 
@@ -21,12 +21,13 @@ class BlogDetail extends Component {
     state = {
         loading: false,
         blog: {},
-        activeIndex: 0
+        activeIndex: 0,
+        like: {}
     };
 
     componentWillMount() {
-        // const blogName = this.props.blogName;
-        const blogName = "tomi-lee.tumblr.com";
+        const blogName = this.props.blogName;
+        // const blogName = 'tomi-lee';
 
         this.setState({loading: true});
         TumblrClient.blogPosts(blogName, (err, data) => {
@@ -35,6 +36,13 @@ class BlogDetail extends Component {
                 loading: false,
                 blog: data
             });
+        });
+
+        TumblrClient.blogLikes(blogName, (err, data) => {
+            console.log(data);
+            this.setState({
+                like: data
+            })
         })
     }
 
@@ -75,26 +83,18 @@ class BlogDetail extends Component {
     }
 
     render() {
-        console.log(this.state);
-
         const {loading} = this.state;
-        let {blog, posts, total_posts} = this.state.blog;
+        let {blog, posts = [], total_posts} = this.state.blog;
+        let {liked_posts = [], liked_count} = this.state.like;
         if (blog === undefined) blog = {};
 
-        console.log(blog);
-        // debugger
-        let postsEle = undefined;
-        if (!_.isEmpty(posts)) {
-            postsEle = _.map(_.cloneDeep(posts), post => {
-                console.log(post);
-                return <Text key={post.id}>{post.blog_name}</Text>
-                // return <Post post={post} toggleLike={() => {}}/>
-            });
-        }
-
+        let postsEle = posts.map(post => <Post key={post.id} post={post}/>);
+        let likeEle = liked_posts.map(post => <Post key={post.id} post={post}/>);
 
         return (
-            <ScrollView style={styles.page} ref="test">
+            <ScrollView
+                style={styles.page}
+                bounces={false}>
                 <View style={styles.navigator}>
                     <IconButton name="chevron-left" onPress={() => {back()}}/>
                     <Image style={{width: 48, height: 48}} source={{uri : `https://api.tumblr.com/v2/blog/${blog.name}/avatar/${48}`}}/>
@@ -116,19 +116,17 @@ class BlogDetail extends Component {
                         showsButtons={false}
                         showsPagination={false}
                         onMomentumScrollEnd={(e,state,context) => {
-                            console.log(state);
                             this.setState({
                                 activeIndex : state.index
                             })
                         }}>
 
                     <ScrollView
-                        contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}
                         style={styles.slide1}>
                         {postsEle}
                     </ScrollView>
                     <ScrollView
-                        onScroll={(event : Object) => {
+                        onScroll={(event) => {
                             console.log(this);
                             console.log(event.nativeEvent.contentOffset.y);
                             const currentOffset = event.nativeEvent.contentOffset.y;
@@ -138,8 +136,10 @@ class BlogDetail extends Component {
                         }}
                         bounces={false}
                         scrollEventThrottle={200}
-                        contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}
                         style={styles.slide2}>
+
+                        {likeEle}
+
                     </ScrollView>
                 </Swiper>
 
