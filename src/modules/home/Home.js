@@ -3,7 +3,7 @@
  */
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, ActivityIndicator, ListView, RefreshControl, Dimensions, Platform} from 'react-native';
+import {StyleSheet, ActivityIndicator, ListView, RefreshControl, Platform} from 'react-native';
 
 import {Post} from '../../components/Post';
 

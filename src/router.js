@@ -9,6 +9,9 @@ import main from './modules/main';
 import common from './common';
 import home from './modules/home';
 import newPost from './modules/newPost';
+import {UserDetail} from './modules/user/UserDetail';
+import {UserLikes} from './modules/user/UserLikes';
+import {UserFollowing} from './modules/user/UserFollowing';
 
 export const Router = createRouter(() => ({
     main: () => main.Main,
@@ -18,7 +21,9 @@ export const Router = createRouter(() => ({
     post: () => newPost.NewPost,
     newTextPost: () => newPost.NewTextPost,
     newImagePost: () => newPost.NewImagePost,
-    account: () => common.AccountDetail
+    user: () => UserDetail,
+    userLikes: () => UserLikes,
+    userFollowing: () => UserFollowing
 }));
 
 export const go = (name, params = {}) => {
