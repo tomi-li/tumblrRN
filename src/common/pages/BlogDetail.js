@@ -11,6 +11,8 @@ import Swiper from 'react-native-swiper';
 import {IconButton} from '../../components/IconButton';
 import {TextButton} from '../../components/TextButton';
 import {Post} from '../../components/Post';
+import {NavigatorView} from '../../components/NavigatorView';
+
 
 class BlogDetail extends Component {
 
@@ -26,16 +28,13 @@ class BlogDetail extends Component {
     };
 
     componentWillMount() {
-        const blogName = this.props.blogName;
+        // const blogName = this.props.blogName;
         // const blogName = 'tomi-lee';
+        const blogName = 'tomi-test-blog';
 
         this.setState({loading: true});
         TumblrClient.blogPosts(blogName, (err, data) => {
-            console.log(data);
-            this.setState({
-                loading: false,
-                blog: data
-            });
+            this.setState({loading: false, blog: data});
         });
 
         TumblrClient.blogLikes(blogName, (err, data) => {
@@ -82,6 +81,18 @@ class BlogDetail extends Component {
         }
     }
 
+    renderHeader(blog) {
+        return (
+            <View style={styles.header}>
+                <View style={styles.header_user_info}>
+                    <Image style={styles.header_avatar} source={{uri : `https://api.tumblr.com/v2/blog/${blog.name}/avatar/${30}`}}/>
+                    <Text style={styles.header_title}>{blog.name}</Text>
+                </View>
+                <TextButton color="#ffffff" onPress={() => this.toggleFollow()}>{blog.followed ? 'unfollow' : 'follow'}</TextButton>
+            </View>
+        )
+    }
+
     render() {
         const {loading} = this.state;
         let {blog, posts = [], total_posts} = this.state.blog;
@@ -92,22 +103,15 @@ class BlogDetail extends Component {
         let likeEle = liked_posts.map(post => <Post key={post.id} post={post}/>);
 
         return (
-            <ScrollView
-                style={styles.page}
-                bounces={false}>
-                <View style={styles.navigator}>
-                    <IconButton name="chevron-left" onPress={() => {back()}}/>
-                    <Image style={{width: 48, height: 48}} source={{uri : `https://api.tumblr.com/v2/blog/${blog.name}/avatar/${48}`}}/>
-                    <Text style={{ fontSize: 20, color: '#ffffff'}}>{blog.name}</Text>
-                    <TextButton onPress={() => this.toggleFollow()}>{blog.followed ? 'unfollow' : 'follow'}</TextButton>
-                </View>
+            <NavigatorView
+                renderHeader={() => this.renderHeader(blog)}>
 
                 <View style={styles.pager}>
                     <TouchableHighlight style={[styles.pager_buttons, this.state.activeIndex === 0 ? styles.pager_buttons_active : {}]} onPress={() => this.postsPage()}>
-                        <Text>Blogs</Text>
+                        <Text style={[styles.pager_buttons_text, this.state.activeIndex === 0 ? styles.pager_buttons_text_active: {}]}>Blogs</Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={[styles.pager_buttons, this.state.activeIndex === 1 ? styles.pager_buttons_active : {}]} onPress={() => this.likesPage()}>
-                        <Text>Likes</Text>
+                        <Text style={[styles.pager_buttons_text, this.state.activeIndex === 1 ? styles.pager_buttons_text_active: {}]}>Likes</Text>
                     </TouchableHighlight>
                 </View>
 
@@ -115,12 +119,7 @@ class BlogDetail extends Component {
                         style={styles.wrapper}
                         showsButtons={false}
                         showsPagination={false}
-                        onMomentumScrollEnd={(e,state,context) => {
-                            this.setState({
-                                activeIndex : state.index
-                            })
-                        }}>
-
+                        onMomentumScrollEnd={(e,state,context) => this.setState({activeIndex : state.index}) }>
                     <ScrollView
                         style={styles.slide1}>
                         {postsEle}
@@ -137,44 +136,34 @@ class BlogDetail extends Component {
                         bounces={false}
                         scrollEventThrottle={200}
                         style={styles.slide2}>
-
                         {likeEle}
-
                     </ScrollView>
                 </Swiper>
 
-            </ScrollView>
+            </NavigatorView>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    page: {
-        paddingTop: Platform.OS === 'ios' ? 22 : 0,
-        marginTop: Platform.OS === 'ios' ? 0 : 22,
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
-    navigator: {
-        backgroundColor: '#9911f3',
-        flexDirection: 'row'
+    header_avatar: {
+        width: 32,
+        height: 32
     },
-    header: {},
-    wrapper: {},
-    slide1: {
-        flex: 1,
-        backgroundColor: '#9DD6EB',
+    header_user_info: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
-    slide2: {
-        flex: 1,
-        backgroundColor: '#97CAE5',
-    },
-    slide3: {
-        flex: 1,
-        backgroundColor: '#92BBD9',
-    },
-    text: {
-        color: '#fff',
-        fontSize: 30,
-        fontWeight: 'bold',
+    header_title: {
+        color: '#ffffff',
+        fontWeight: '600',
+        marginLeft: 14,
+        fontSize: 16
     },
     pager: {
         flexDirection: 'row'
@@ -182,11 +171,19 @@ const styles = StyleSheet.create({
     pager_buttons: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#ff00ff'
+        backgroundColor: '#ffffff'
     },
     pager_buttons_active: {
-        borderBottomWidth: 10,
-        borderBottomColor: '#ffffff'
+        borderBottomWidth: 2,
+        borderBottomColor: '#506385'
+    },
+    pager_buttons_text: {
+        fontSize: 14,
+        fontWeight: '600',
+        paddingVertical: 10
+    },
+    pager_buttons_text_active: {
+        color: '#506385'
     }
 });
 
@@ -194,5 +191,3 @@ export default connect(
     (state) => ({}),
     (dispatch) => ({})
 )(BlogDetail);
-
-
