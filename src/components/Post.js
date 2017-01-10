@@ -4,7 +4,9 @@
 
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Dimensions, WebView, Image, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, WebView, ScrollView, Image} from 'react-native';
+import ProgressiveImage  from 'react-native-image-progress';
+import {CircleSnail} from 'react-native-progress';
 import {IconButton} from './IconButton';
 import {TextButton} from './TextButton';
 import Video from 'react-native-video';
@@ -168,8 +170,9 @@ function renderBody(post: Object, width: Number) {
                 const imageHeight = width / ratio;
                 const imageStyle = {width: imageWidth, height: imageHeight, marginTop: _.first(fittedImage) === image ? 0 : 5, backgroundColor: '#cccccc'};
 
-                return <Image
+                return <ProgressiveImage
                     key={image.url}
+                    indicator={CircleSnail}
                     resizeMode='contain'
                     style={imageStyle}
                     source={{ uri : image.url }}/>

@@ -9,7 +9,7 @@ import {TumblrClient} from '../../api';
 class AccountDetail extends Component {
 
     state = {
-        user: {}
+        user: undefined
     };
 
     componentWillMount() {
@@ -23,8 +23,12 @@ class AccountDetail extends Component {
             <View>
                 <Text>{'账号'}</Text>
                 <View>
-                    <Text>{'likes'}</Text>
+                    <Text>likes</Text>
                     <Text>{this.state.user}</Text>
+                </View>
+                <View>
+                    <Text>following</Text>
+                    <Text>123</Text>
                 </View>
             </View>
         )
