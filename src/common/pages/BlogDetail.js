@@ -4,11 +4,9 @@
 
 import React, {Component} from 'react';
 import {Button, ScrollView, Text, StyleSheet, Platform, Image, View, TouchableHighlight} from 'react-native';
-import {back} from '../../router';
 import {connect} from "react-redux";
 import {TumblrClient} from '../../api';
 import Swiper from 'react-native-swiper';
-import {IconButton} from '../../components/IconButton';
 import {TextButton} from '../../components/TextButton';
 import {Post} from '../../components/Post';
 import {NavigatorView} from '../../components/NavigatorView';
@@ -24,25 +22,21 @@ class BlogDetail extends Component {
         loading: false,
         blog: {},
         activeIndex: 0,
-        like: {}
+        likedPosts: {}
     };
 
     componentWillMount() {
-        // const blogName = this.props.blogName;
-        // const blogName = 'tomi-lee';
-        const blogName = 'tomi-test-blog';
+        const blogName = this.props.blogName;
+        // const blogName = 'tomi-test-blog';
 
         this.setState({loading: true});
         TumblrClient.blogPosts(blogName, (err, data) => {
-            this.setState({loading: false, blog: data});
-        });
-
-        TumblrClient.blogLikes(blogName, (err, data) => {
             console.log(data);
-            this.setState({
-                like: data
-            })
-        })
+            this.setState({loading: false, blog: data});
+            if (data.blog.share_likes) {
+                this.loadBlogLikes();
+            }
+        });
     }
 
     postsPage() {
@@ -81,7 +75,10 @@ class BlogDetail extends Component {
         }
     }
 
-    renderHeader(blog) {
+    renderHeader() {
+        let {blog} = this.state.blog;
+        if (blog === undefined) blog = {};
+
         return (
             <View style={styles.header}>
                 <View style={styles.header_user_info}>
@@ -93,53 +90,83 @@ class BlogDetail extends Component {
         )
     }
 
-    render() {
-        const {loading} = this.state;
+    loadBlogLikes() {
+        TumblrClient.blogLikes(this.props.blogName, (err, data) => {
+            console.log(data);
+            this.setState({
+                likedPosts: data
+            })
+        })
+
+    }
+
+    renderContent() {
         let {blog, posts = [], total_posts} = this.state.blog;
-        let {liked_posts = [], liked_count} = this.state.like;
-        if (blog === undefined) blog = {};
+        let {liked_posts = [], liked_count} = this.state.likedPosts;
 
         let postsEle = posts.map(post => <Post key={post.id} post={post}/>);
         let likeEle = liked_posts.map(post => <Post key={post.id} post={post}/>);
 
+        if (blog === undefined) {
+            return;
+        }
+
+        if (!blog.share_likes) {
+            return (
+                <ScrollView>
+                    {postsEle}
+                </ScrollView>
+            )
+        } else {
+            return (
+                <View>
+                    <View style={styles.pager}>
+                        <TouchableHighlight style={[styles.pager_buttons, this.state.activeIndex === 0 ? styles.pager_buttons_active : {}]} onPress={() => this.postsPage()}>
+                            <Text style={[styles.pager_buttons_text, this.state.activeIndex === 0 ? styles.pager_buttons_text_active: {}]}>Blogs</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={[styles.pager_buttons, this.state.activeIndex === 1 ? styles.pager_buttons_active : {}]} onPress={() => this.likesPage()}>
+                            <Text style={[styles.pager_buttons_text, this.state.activeIndex === 1 ? styles.pager_buttons_text_active: {}]}>Likes</Text>
+                        </TouchableHighlight>
+                    </View>
+
+                    <Swiper ref="swiper"
+                            loop={false}
+                            style={styles.wrapper}
+                            showsButtons={false}
+                            showsPagination={false}
+                            onMomentumScrollEnd={(e,state,context) => this.setState({activeIndex : state.index}) }>
+                        <ScrollView
+                            style={styles.slide1}>
+                            {postsEle}
+                        </ScrollView>
+                        <ScrollView
+                            onScroll={(event) => {
+                                console.log(this);
+                                console.log(event.nativeEvent.contentOffset.y);
+                                const currentOffset = event.nativeEvent.contentOffset.y;
+                                const direction = currentOffset > this.offset ? 'down' : 'up';
+                                this.offset = currentOffset;
+                                console.log(direction);
+                            }}
+                            bounces={false}
+                            scrollEventThrottle={200}
+                            style={styles.slide2}>
+                            {likeEle}
+                        </ScrollView>
+                    </Swiper>
+                </View>
+            )
+        }
+    }
+
+    render() {
+        const {loading} = this.state;
+        const content = this.renderContent();
+
         return (
             <NavigatorView
-                renderHeader={() => this.renderHeader(blog)}>
-
-                <View style={styles.pager}>
-                    <TouchableHighlight style={[styles.pager_buttons, this.state.activeIndex === 0 ? styles.pager_buttons_active : {}]} onPress={() => this.postsPage()}>
-                        <Text style={[styles.pager_buttons_text, this.state.activeIndex === 0 ? styles.pager_buttons_text_active: {}]}>Blogs</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={[styles.pager_buttons, this.state.activeIndex === 1 ? styles.pager_buttons_active : {}]} onPress={() => this.likesPage()}>
-                        <Text style={[styles.pager_buttons_text, this.state.activeIndex === 1 ? styles.pager_buttons_text_active: {}]}>Likes</Text>
-                    </TouchableHighlight>
-                </View>
-
-                <Swiper ref="swiper"
-                        style={styles.wrapper}
-                        showsButtons={false}
-                        showsPagination={false}
-                        onMomentumScrollEnd={(e,state,context) => this.setState({activeIndex : state.index}) }>
-                    <ScrollView
-                        style={styles.slide1}>
-                        {postsEle}
-                    </ScrollView>
-                    <ScrollView
-                        onScroll={(event) => {
-                            console.log(this);
-                            console.log(event.nativeEvent.contentOffset.y);
-                            const currentOffset = event.nativeEvent.contentOffset.y;
-                            const direction = currentOffset > this.offset ? 'down' : 'up';
-                            this.offset = currentOffset;
-                            console.log(direction);
-                        }}
-                        bounces={false}
-                        scrollEventThrottle={200}
-                        style={styles.slide2}>
-                        {likeEle}
-                    </ScrollView>
-                </Swiper>
-
+                renderHeader={() => this.renderHeader()}>
+                {content}
             </NavigatorView>
         )
     }
