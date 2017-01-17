@@ -6,11 +6,12 @@ import React, {Component} from 'react';
 import {Platform, View, Text, Dimensions, StyleSheet, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {back} from '../router';
+import * as _ from "lodash";
 
 export const NavigatorView = (props) => {
 
     const {renderHeader, children}  = props;
-    const header = renderHeader();
+    const header = _.isFunction(renderHeader) ? renderHeader() : undefined;
 
     return (
         <View style={styles.view}>
@@ -26,7 +27,7 @@ export const NavigatorView = (props) => {
 };
 
 NavigatorView.PropTypes = {
-    renderHeader: React.PropTypes.func.isRequired
+    renderHeader: React.PropTypes.func
 };
 
 const styles = StyleSheet.create({

@@ -27,7 +27,7 @@ export const Router = createRouter(() => ({
 }));
 
 export const go = (name, params = {}) => {
-    console.debug('GO:', name, params);
+    console.log('GO:', name, params);
     let navigatorUID = Store.getState().navigation.currentNavigatorUID;
     Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(name, params)));
 };

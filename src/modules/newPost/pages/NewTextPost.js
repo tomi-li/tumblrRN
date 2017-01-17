@@ -3,6 +3,7 @@
  */
 
 import React, {Component} from 'react';
+import {NavigatorView} from '../../../components/NavigatorView';
 import {View, Text, StyleSheet, TextInput, Dimensions} from 'react-native';
 import {TextButton} from '../../../components/TextButton';
 import {connect} from "react-redux";
@@ -12,59 +13,68 @@ class NewTextPost extends Component {
 
     state = {
         title: '',
-        body: ''
+        body: '',
+        bodyHeight: 0
     };
 
+    renderHeader() {
+        return <TextButton
+            textStyles={{ alignSelf: 'flex-end' , paddingRight: 10}}
+            color='#eeeeee'
+            onPress={() => this.props.newTextPost(this.state.title, this.state.body)}>提交</TextButton>
+    }
+
     render() {
+
         return (
-            <View style={styles.newTextPostView}>
-                <TextInput
-                    style={{height: 40}}
-                    placeholder="标题"
-                    placeholderTextColor='#cccccc'
-                    autoFocus={true}
-                    onChangeText={(text) => this.setState({title: text})}
-                    value={this.state.title}
-                />
-                <TextInput
-                    style={{height: 40}}
-                    placeholder="正文"
-                    placeholderTextColor='#cccccc'
-                    multiline={true}
-                    onChangeText={(text)=> this.setState({body: text})}
-                    value={this.state.body}
-                />
-                <TextButton
-                    textStyles={styles.submitButton}
-                    color='#cccccc'
-                    onPress={() => this.props.newTextPost(this.state.title, this.state.body)}
-                >提交</TextButton>
-            </View>
+            <NavigatorView renderHeader={() => this.renderHeader()}>
+                <View style={styles.newTextPostView}>
+                    <TextInput
+                        style={styles.title}
+                        placeholder="标题"
+                        placeholderTextColor='#aaaaaa'
+                        autoFocus={true}
+                        onChangeText={(text) => this.setState({title: text})}
+                        value={this.state.title}
+                    />
+                    <TextInput
+                        style={[styles.content, {height: Math.min(300, Math.max(50, this.state.bodyHeight))}]}
+                        placeholder="正文"
+                        placeholderTextColor='#aaaaaa'
+                        multiline={true}
+                        onContentSizeChange={
+                            e => this.setState({bodyHeight: e.nativeEvent.contentSize.height})
+                        }
+                        onChangeText={(text)=> this.setState({body: text})}
+                        value={this.state.body}
+                    />
+                </View>
+            </NavigatorView>
         )
     }
 }
 
-
 const styles = StyleSheet.create({
     newTextPostView: {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
-        backgroundColor: '#374A60',
-        paddingTop: 22,
-        paddingHorizontal: 20
+        padding: 20,
     },
-    submitButton: {
-        borderColor: '#cccccc',
-        borderWidth: 1,
-        width: 100,
-        padding: 4,
-        alignItems: 'center'
+    title: {
+        fontSize: 16,
+        paddingVertical: 16,
+        height: 50,
+        color: '#eeeeee',
+        fontWeight: '600'
+    },
+    content: {
+        fontSize: 16,
+        paddingVertical: 16,
+        color: '#eeeeee'
     }
 });
 
 export default connect(
-    (state) => ({}),
-    (dispatch) => ({
+    state => ({}),
+    dispatch => ({
         newTextPost: (title, body) => dispatch(actions.newTextPost(title, body))
     })
 )(NewTextPost)
