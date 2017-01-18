@@ -20,6 +20,7 @@ export const Router = createRouter(() => ({
     tagDetail: () => common.TagDetail,
     post: () => newPost.NewPost,
     newTextPost: () => newPost.NewTextPost,
+    PickPhoto: () => newPost.PickPhoto,
     newImagePost: () => newPost.NewImagePost,
     user: () => UserDetail,
     userLikes: () => UserLikes,

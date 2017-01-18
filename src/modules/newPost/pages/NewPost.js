@@ -101,7 +101,7 @@ const buttons = [{
     icon: 'camera',
     color: '#D95E3F',
     offset: getCenter(),
-    route: 'newImagePost'
+    route: 'PickPhoto'
 }, {
     text: 'Chat',
     icon: 'bubbles',

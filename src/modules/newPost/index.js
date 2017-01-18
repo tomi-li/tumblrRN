@@ -11,6 +11,7 @@ import * as actions from './actions';
 import NewPost from './pages/NewPost';
 import NewImagePost from './pages/NewImagePost';
 import NewTextPost from './pages/NewTextPost';
+import {PickPhoto} from './pages/PickPhoto';
 
 export default {
     NAME,
@@ -18,5 +19,6 @@ export default {
     actions,
     NewPost,
     NewImagePost,
-    NewTextPost
+    NewTextPost,
+    PickPhoto,
 }
