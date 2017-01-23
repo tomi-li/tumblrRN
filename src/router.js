@@ -15,6 +15,7 @@ import {UserFollowing} from './modules/user/UserFollowing';
 
 export const Router = createRouter(() => ({
     main: () => main.Main,
+    login: () => common.Login,
     home: () => home.Home,
     detail: () => common.BlogDetail,
     tagDetail: () => common.TagDetail,

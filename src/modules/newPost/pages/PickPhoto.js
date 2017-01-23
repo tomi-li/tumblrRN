@@ -9,7 +9,7 @@ import {IconButton} from '../../../components/IconButton';
 import {Modal, View, Text, CameraRoll, Platform, StyleSheet, Dimensions, Button, TextInput, NativeModules, TouchableHighlight} from 'react-native';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 import Camera from 'react-native-camera';
-import {go,} from '../../../router';
+import {go} from '../../../router';
 
 class PickPhoto extends Component {
 
@@ -86,7 +86,9 @@ class PickPhoto extends Component {
                         ref="icon"
                         style={styles.cameraIcon}
                         aspect={Camera.constants.Aspect.fill}>
-                        <IconButton size={24} name="camera" color='#ffffff' onPress={() => this.setState({showModal: true})}/>
+                        <IconButton size={24} name="camera" color='#ffffff' onPress={() => {
+                            this.setState({showModal: true})
+                        }}/>
                     </Camera>
                     <CameraRollPicker
                         ref="cameraRoll"
