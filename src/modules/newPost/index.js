@@ -3,7 +3,7 @@
  */
 
 
-import {NAME} from './consts';
+import { NAME } from './consts';
 import reducers from './reducers';
 import * as actions from './actions';
 
@@ -11,14 +11,14 @@ import * as actions from './actions';
 import NewPost from './pages/NewPost';
 import NewImagePost from './pages/NewImagePost';
 import NewTextPost from './pages/NewTextPost';
-import {PickPhoto} from './pages/PickPhoto';
+import { PickPhoto } from './pages/PickPhoto';
 
 export default {
-    NAME,
-    reducers,
-    actions,
-    NewPost,
-    NewImagePost,
-    NewTextPost,
-    PickPhoto,
+  NAME,
+  reducers,
+  actions,
+  NewPost,
+  NewImagePost,
+  NewTextPost,
+  PickPhoto,
 }

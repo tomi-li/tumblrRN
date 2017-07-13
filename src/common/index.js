@@ -5,16 +5,16 @@
 
 import * as actions from './actions';
 import reducers from './reducer';
-import {NAME} from './consts';
+import { NAME } from './consts';
 import BlogDetail from './pages/BlogDetail';
 import TagDetail from './pages/TagDetail';
-import {Login} from './pages/Login';
+import { Login } from './pages/Login';
 
 export default {
-    NAME,
-    actions,
-    reducers,
-    BlogDetail,
-    TagDetail,
-    Login
+  NAME,
+  actions,
+  reducers,
+  BlogDetail,
+  TagDetail,
+  Login,
 };

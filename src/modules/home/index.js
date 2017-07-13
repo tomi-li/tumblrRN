@@ -5,11 +5,11 @@
 import reducers from './reducer';
 import Home from './Home';
 import * as actions  from './actions';
-import {NAME} from './consts';
+import { NAME } from './consts';
 
 export default{
-    NAME,
-    Home,
-    reducers,
-    actions
+  NAME,
+  Home,
+  reducers,
+  actions,
 }

@@ -3,28 +3,28 @@
  */
 
 import * as consts from './consts';
-import {TumblrClient} from '../api';
+import { TumblrClient } from '../api';
 
 export const loadBlog = (blogName) => {
-    return (dispatch, getState) => {
+  return (dispatch, getState) => {
 
-        dispatch({
-            type: consts.GET_BLOG_DETAIL,
-            payloads: {
-                loading: true
-            }
-        });
+    dispatch({
+      type: consts.GET_BLOG_DETAIL,
+      payloads: {
+        loading: true,
+      },
+    });
 
-        TumblrClient.blogPosts(blogName, (err, data) => {
-            dispatch({
-                type: consts.GET_BLOG_DETAIL,
-                payloads: {
-                    loading: false,
-                    data: data
-                }
-            })
-        })
+    TumblrClient.blogPosts(blogName, (err, data) => {
+      dispatch({
+        type: consts.GET_BLOG_DETAIL,
+        payloads: {
+          loading: false,
+          data: data,
+        },
+      })
+    })
 
-    }
+  }
 };
 

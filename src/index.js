@@ -14,8 +14,10 @@ export default class App extends Component {
     return (
       <Provider store={Store}>
         <NativeRouter>
-          <StatusBar backgroundColor='#374A60' barStyle="light-content" translucent={true}/>
-          <Route exact path="/" component={home.Home}/>
+          <View>
+            <StatusBar backgroundColor='#374A60' barStyle="light-content" translucent={true}/>
+            <Route exact path="/" component={home.Home}/>
+          </View>
         </NativeRouter>
       </Provider>
     )

@@ -16,11 +16,13 @@ export const Router = createRouter(() => ({
   home: () => home.Home,
   detail: () => common.BlogDetail,
   tagDetail: () => common.TagDetail,
-  post: () => newPost.NewPost,
-  newTextPost: () => newPost.NewTextPost,
-  PickPhoto: () => newPost.PickPhoto,
-  newImagePost: () => newPost.NewImagePost,
-  user: () => UserDetail,
-  userLikes: () => UserLikes,
-  userFollowing: () => UserFollowing,
 }));
+//  post: () => newPost.NewPost,
+//  newTextPost: () => newPost.NewTextPost,
+//  PickPhoto: () => newPost.PickPhoto,
+//  newImagePost: () => newPost.NewImagePost,
+//  user: () => UserDetail,
+//  userLikes: () => UserLikes,
+//  userFollowing: () => UserFollowing,
+//
+//}

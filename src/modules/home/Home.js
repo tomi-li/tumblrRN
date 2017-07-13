@@ -3,11 +3,10 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, ActivityIndicator, ListView, RefreshControl, Platform } from 'react-native';
+import { StyleSheet, ActivityIndicator, ListView, Platform } from 'react-native';
 import { Post } from '../../components/Post';
 import { connect } from 'react-redux'
 import * as actions from './actions';
-import { withRouter } from 'react-router-native';
 
 const Home = (props) => {
   const { loadPosts, loading, dataSource, toggleLike } = props;
@@ -41,7 +40,7 @@ Home.propsType = {
   loadPost: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(
+export default connect(
   (state) => ({
     loading: state.home.loading,
     posts: state.home.posts,
@@ -54,4 +53,4 @@ export default withRouter(connect(
     loadPosts: () => dispatch(actions.loadPosts()),
     toggleLike: (post) => dispatch(actions.toggleLikePost(post)),
   }),
-)(Home));
+)(Home);

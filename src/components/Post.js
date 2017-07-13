@@ -1,8 +1,8 @@
 /**
  * All Codes below are Lifetime Warranted by Tomi since 13/12/2016.
  */
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions, WebView, ScrollView, Image } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Dimensions, ScrollView, Image } from 'react-native';
 import ProgressiveImage  from 'react-native-image-progress';
 import { CircleSnail } from 'react-native-progress';
 import { IconButton } from './IconButton';

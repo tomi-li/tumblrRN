@@ -15,10 +15,10 @@ let tumblr = require('tumblr.rn.js');
 
 // lishuo.tomi@hotmail.com
 let TumblrClient = tumblr.createClient({
-    consumer_key: 'LXMQBT1mHyR16EaGYR3zcJ6d4oTMBEiHPo4lF66LDUUfZBQK28',
-    consumer_secret: 'kK3OuagPXF7lAY4efsjm92uDMwsYWtPnLSyGugQXJmt1kIX3PF',
-    token: 'wKjxvSChSGMFpoUC6JbgMmp5lpUFalv8Pj6oUsw2n34YX3e7Bh',
-    token_secret: 'jYg0SadaEMTtqwL70ozX8Pu7zgQfraPeEkEWpgksgl8Z5Egrja'
+  consumer_key: 'LXMQBT1mHyR16EaGYR3zcJ6d4oTMBEiHPo4lF66LDUUfZBQK28',
+  consumer_secret: 'kK3OuagPXF7lAY4efsjm92uDMwsYWtPnLSyGugQXJmt1kIX3PF',
+  token: 'wKjxvSChSGMFpoUC6JbgMmp5lpUFalv8Pj6oUsw2n34YX3e7Bh',
+  token_secret: 'jYg0SadaEMTtqwL70ozX8Pu7zgQfraPeEkEWpgksgl8Z5Egrja',
 });
 
-export {TumblrClient}
+export { TumblrClient }
