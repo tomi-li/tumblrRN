@@ -50,7 +50,9 @@ export default connect(
     size: state.home.size,
   }),
   (dispatch) => ({
-    loadPosts: () => dispatch(actions.loadPosts()),
+    loadPosts: () => {
+      return dispatch(actions.loadPosts());
+    },
     toggleLike: (post) => dispatch(actions.toggleLikePost(post)),
   }),
 )(Home);

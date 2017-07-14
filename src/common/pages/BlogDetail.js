@@ -11,7 +11,6 @@ import { TextButton } from '../../components/TextButton';
 import { Post } from '../../components/Post';
 import { NavigatorView } from '../../components/NavigatorView';
 
-
 class BlogDetail extends Component {
 
   static PropTypes = {

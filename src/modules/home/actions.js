@@ -6,7 +6,6 @@ import { TumblrClient } from '../../api';
 import { NAME, LOAD_POSTS, LOADING, POST_LIKE } from './consts';
 
 export const loadPosts = () => {
-
   return (dispatch, getState) => {
 
     let prevState = getState();
@@ -20,8 +19,10 @@ export const loadPosts = () => {
     });
 
     TumblrClient.userDashboard({
+      type: 'photo',
       offset: prevState[NAME].page * prevState[NAME].size,
     }, (err, data) => {
+      console.log(data);
       dispatch({
         type: LOAD_POSTS,
         payloads: {

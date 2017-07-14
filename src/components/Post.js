@@ -10,6 +10,7 @@ import { TextButton } from './TextButton';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash';
+import { Link } from 'react-router-native';
 
 export const Post = (props) => {
 
@@ -24,9 +25,6 @@ export const Post = (props) => {
       <View style={styles.post_head}>
         <Image style={styles.post_head_avatar} source={{ uri: `https://api.tumblr.com/v2/blog/${post.blog_name}/avatar/` }}/>
         <View style={styles.post_head_titles}>
-          <TextButton
-            textStyles={styles.post_head_title}
-            onPress={ () => go('detail', { blogName: post.blog_name })}>{post.blog_name}</TextButton>
           {postHeaderTrail}
         </View>
       </View>
