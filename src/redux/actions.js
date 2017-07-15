@@ -2,12 +2,11 @@
  * All Codes below are Lifetime Warranted by Tomi since 19/12/2016.
  */
 
-import { TumblrClient } from '../../api';
-import { NAME, LOAD_POSTS, LOADING, POST_LIKE } from './consts';
+import { TumblrClient } from '../api';
+import { LOAD_POSTS, LOADING, POST_LIKE } from './actionTypes';
 
 export const loadPosts = () => {
   return (dispatch, getState) => {
-
     let prevState = getState();
 
     // if already loading. skip
@@ -20,7 +19,7 @@ export const loadPosts = () => {
 
     TumblrClient.userDashboard({
       type: 'photo',
-      offset: prevState[NAME].page * prevState[NAME].size,
+      offset: prevState.page * prevState.size,
     }, (err, data) => {
       console.log(data);
       dispatch({
@@ -39,7 +38,6 @@ export const loadPosts = () => {
 };
 
 export const toggleLikePost = (post) => {
-
   return (dispatch, getState) => {
     dispatch({
       type: POST_LIKE,

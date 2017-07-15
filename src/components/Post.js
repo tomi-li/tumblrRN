@@ -34,7 +34,7 @@ export const Post = (props) => {
       </View>
 
       <ScrollView horizontal={true}>
-        <TextButton color="#B5B5B5" onPress={() => go('detail', { blogName: post.source_title })}>Source: {post.source_title}</TextButton>
+        <TextButton color="#B5B5B5" onPress={() => this.props.history.push('/detail', { state: { blogName: post.source_title } })}>Source: {post.source_title}</TextButton>
         {postTags}
       </ScrollView>
 
@@ -207,14 +207,14 @@ function renderBody(post: Object, width: Number) {
 }
 
 function renderTags(tags: Array) {
-  return _.map(tags, tag => <TextButton color="#B5B5B5" key={tag} onPress={() => go('tagDetail', { tag: tag })}>#{tag}</TextButton>)
+  return _.map(tags, tag => <TextButton color="#B5B5B5" key={tag} onPress={() => this.props.history.push('tagDetail', { tag: tag })}>#{tag}</TextButton>)
 }
 
 function renderTrail(trail: Array) {
   return _.last(_.map(trail, (trailItem, index) =>
     <View style={styles.post_body_trail} key={index}>
       <Image style={styles.post_body_trail_avatar} source={{ uri: `https://api.tumblr.com/v2/blog/${trailItem.blog.name}/avatar/` }}/>
-      <TextButton textStyles={styles.post_body_trail_text} onPress={ () => go('detail', { blogName: trailItem.blog.name })}>{trailItem.blog.name}</TextButton>
+      <TextButton textStyles={styles.post_body_trail_text} onPress={ () => this.props.history.push('detail', { blogName: trailItem.blog.name })}>{trailItem.blog.name}</TextButton>
     </View>,
   ))
 }

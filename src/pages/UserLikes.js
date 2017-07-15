@@ -4,9 +4,9 @@
 
 import React, { Component } from 'react';
 import { View, Text, ListView, StyleSheet } from 'react-native';
-import { TumblrClient } from '../../api';
-import { NavigatorView } from '../../components/NavigatorView';
-import { Post } from '../../components/Post';
+import { TumblrClient } from '../api';
+import { NavigatorView } from '../components/NavigatorView';
+import { Post } from '../components/Post';
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 

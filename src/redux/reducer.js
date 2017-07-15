@@ -4,7 +4,7 @@
 
 import { ListView } from 'react-native';
 import { handleActions } from 'redux-actions';
-import { LOAD_POSTS, LOADING, POST_LIKE } from './consts';
+import { LOAD_POSTS, LOADING, POST_LIKE } from './actionTypes';
 import _ from 'lodash';
 
 const initialState = {

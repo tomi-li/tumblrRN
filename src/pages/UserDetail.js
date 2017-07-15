@@ -5,11 +5,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform, Dimensions, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { TumblrClient } from '../../api';
+import { TumblrClient } from '../api';
 import { go } from '../../router';
-import { Blog } from  '../../components/Blog';
+import { Blog } from  '../components/Blog';
 
-class UserDetail extends Component {
+export default class UserDetail extends Component {
 
   state = {
     user: undefined,
@@ -24,10 +24,8 @@ class UserDetail extends Component {
 
   renderBlog(blogs) {
     if (blogs === undefined || blogs.length === 0) return;
-
     return blogs.map(blog => <Blog style={styles.blog} key={blog.name} blog={blog}/>);
   }
-
 
   render() {
     const user = this.state.user || {};
@@ -112,17 +110,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#548F55',
   },
 });
-
-export{ UserDetail };
-
-
-
-
-
-
-
-
-
-
-
-

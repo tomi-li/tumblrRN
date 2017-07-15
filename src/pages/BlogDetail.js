@@ -5,11 +5,11 @@
 import React, { Component } from 'react';
 import { Button, ScrollView, Text, StyleSheet, Platform, Image, View, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import { TumblrClient } from '../../api';
+import { TumblrClient } from '../api';
 import Swiper from 'react-native-swiper';
-import { TextButton } from '../../components/TextButton';
-import { Post } from '../../components/Post';
-import { NavigatorView } from '../../components/NavigatorView';
+import { TextButton } from '../components/TextButton';
+import { Post } from '../components/Post';
+import { NavigatorView } from '../components/NavigatorView';
 
 class BlogDetail extends Component {
 
@@ -25,6 +25,8 @@ class BlogDetail extends Component {
   };
 
   componentWillMount() {
+    console.log(this.props);
+    console.log(this.state);
     const blogName = this.props.blogName;
     // const blogName = 'tomi-test-blog';
 
