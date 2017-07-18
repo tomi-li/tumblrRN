@@ -3436,7 +3436,7 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.14.1, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@~4.17.2:
+lodash@^4.0.0, lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.14.1, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4164,6 +4164,10 @@ react-native-camera-roll-picker@^1.1.9:
 react-native-camera@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-0.4.1.tgz#b8d24bd2e0b7f9d93fd4f2b7e6ef15fdeb886391"
+
+react-native-drawer-menu@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-drawer-menu/-/react-native-drawer-menu-0.2.4.tgz#cfcac7743c106c4852b9a7b827758635e311449e"
 
 "react-native-fbads@https://github.com/callstack-io/react-native-fbads/tarball/v4.1.0":
   version "4.1.0"

@@ -2,7 +2,7 @@
  * All Codes below are Lifetime Warranted by Tomi since 10/01/2017.
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import { Platform, View, Text, Dimensions, StyleSheet, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as _ from 'lodash';

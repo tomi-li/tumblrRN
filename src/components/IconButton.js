@@ -8,11 +8,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const IconButton = (props) => {
 
-  const { name, size, color, iconStyle, onPress } = props;
+  const { name, size, color, iconStyle = {}, onPress } = props;
 
   return (
     <TouchableHighlight
-      style={styles.iconButton}
+      style={[styles.iconButton, iconStyle]}
       onPress={onPress}
       underlayColor="rgba(55,74,96, .1)"
       activeOpacity={.7}>

@@ -2,7 +2,7 @@
  * All Codes below are Lifetime Warranted by Tomi since 13/12/2016.
  */
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, ScrollView, Image, PixelRatio } from 'react-native';
 import ProgressiveImage  from 'react-native-image-progress';
 import { CircleSnail } from 'react-native-progress';
 import { IconButton } from './IconButton';
@@ -15,7 +15,7 @@ import { Link } from 'react-router-native';
 export const Post = (props) => {
 
   const { post, toggleLike } = props;
-  const { width, scale } = Dimensions.get('window');
+  const { width } = Dimensions.get('window');
   const postBody = renderBody(post, width);
   const postTags = renderTags(post.tags);
   const postHeaderTrail = renderPostHeaderTrail(post.trail);
@@ -39,24 +39,12 @@ export const Post = (props) => {
       </ScrollView>
 
       <View style={styles.post_foot}>
-        <TextButton onPress={() => {
-        }} textStyles={styles.post_foot_notes} color="#B5B5B5">{post.note_count + ' notes'}</TextButton>
+        <TextButton onPress={() => ({})} textStyles={styles.post_foot_notes} color="#B5B5B5">{post.note_count + ' notes'}</TextButton>
         <View style={styles.post_foot_buttons}>
-          <View style={styles.post_foot_buttons_button}>
-            <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => {
-            }} size={18} color='#B5B5B5' name="paper-plane-o"/>
-          </View>
-          <View style={styles.post_foot_buttons_button}>
-            <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => {
-            }} size={18} color='#B5B5B5' name="comment-o"/>
-          </View>
-          <View style={styles.post_foot_buttons_button}>
-            <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => {
-            }} size={18} color='#B5B5B5' name="retweet"/>
-          </View>
-          <View style={styles.post_foot_buttons_button}>
-            <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name={post.liked ? 'heart' : 'heart-o'}/>
-          </View>
+          <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => ({})} size={18} color='#B5B5B5' name="paper-plane-o"/>
+          <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => ({})} size={18} color='#B5B5B5' name="comment-o"/>
+          <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => ({})} size={18} color='#B5B5B5' name="retweet"/>
+          <IconButton iconStyle={styles.post_foot_buttons_button} onPress={() => toggleLike(post)} size={18} color={post.liked ? 'red' : '#B5B5B5'} name={post.liked ? 'heart' : 'heart-o'}/>
         </View>
       </View>
     </View>
@@ -147,7 +135,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 // TODO all html content need to be render in HTMl. right now . just render in text wrapped in text
 function renderBody(post: Object, width: Number) {
   let postBody;
@@ -158,7 +145,7 @@ function renderBody(post: Object, width: Number) {
     case 'photo':
       const fittedImage = _.map(post.photos, photo => {
         return _.reduce(photo.alt_sizes, (prev, curr) => {
-          return (Math.abs(curr.width - width) < Math.abs(prev.width - width) ? curr : prev);
+          return (Math.abs(curr.width - width * PixelRatio.get()) < Math.abs(prev.width - width * PixelRatio.get()) ? curr : prev);
         })
       });
 
@@ -220,14 +207,13 @@ function renderTrail(trail: Array) {
 }
 
 function renderPostHeaderTrail(trail: Array) {
-  if (trail && trail.length > 0) {
-    return <TextButton
-      textStyles={styles.post_head_subtitle}
-      onPress={ () => go('detail', { blogName: trail[0].blog.name })}>
-      <Icon name="retweet"/> {trail[0].blog.name}
-    </TextButton>
-  } else {
-    return null
-  }
-
+  return (trail && trail.length > 0)
+    ? (
+      <TextButton
+        textStyles={styles.post_head_subtitle}
+        onPress={ () => go('detail', { blogName: trail[0].blog.name })}>
+        <Icon name="retweet"/> {trail[0].blog.name}
+      </TextButton>
+    )
+    : null;
 }
