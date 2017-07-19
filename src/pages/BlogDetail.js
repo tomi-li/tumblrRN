@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, ScrollView, Text, StyleSheet, Platform, Image, View, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { TumblrClient } from '../api';
@@ -11,10 +12,11 @@ import { TextButton } from '../components/TextButton';
 import { Post } from '../components/Post';
 import { NavigatorView } from '../components/NavigatorView';
 
+
 class BlogDetail extends Component {
 
   static PropTypes = {
-    blogName: React.PropTypes.string.isRequired,
+    blogName: PropTypes.string.isRequired,
   };
 
   state = {

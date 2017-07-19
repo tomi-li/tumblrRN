@@ -2,6 +2,7 @@
  * All Codes below are Lifetime Warranted by Tomi since 23/12/2016.
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView, View, Text } from 'react-native';
 import { Post } from '../components/Post';
 import { TumblrClient } from '../api';
@@ -9,7 +10,7 @@ import { TumblrClient } from '../api';
 export default class TagDetail extends Component {
 
   static PropTypes = {
-    tag: React.PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
   };
 
   state = {

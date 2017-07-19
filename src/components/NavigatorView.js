@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Platform, View, Text, Dimensions, StyleSheet, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as _ from 'lodash';
@@ -26,7 +27,7 @@ export const NavigatorView = (props) => {
 };
 
 NavigatorView.PropTypes = {
-  renderHeader: React.PropTypes.func,
+  renderHeader: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

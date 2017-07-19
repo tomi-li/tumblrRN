@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -22,11 +23,11 @@ export const IconButton = (props) => {
 };
 
 IconButton.PropTypes = {
-  name: React.PropTypes.string.isRequired,
-  color: React.PropTypes.string.isRequired,
-  size: React.PropTypes.number.isRequired, // in px
-  onPress: React.PropTypes.func.isRequired,
-  iconStyles: React.PropTypes.object,
+  name: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired, // in px
+  onPress: PropTypes.func.isRequired,
+  iconStyles: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

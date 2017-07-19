@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 export const TextButton = (props) => {
@@ -22,9 +23,9 @@ export const TextButton = (props) => {
 
 
 TextButton.PropTypes = {
-  onPress: React.PropTypes.func.isRequired,
-  textStyles: React.PropTypes.object.isRequired,
-  color: React.PropTypes.string,
+  onPress: PropTypes.func.isRequired,
+  textStyles: PropTypes.object.isRequired,
+  color: PropTypes.string,
 };
 
 

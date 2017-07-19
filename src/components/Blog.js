@@ -3,8 +3,8 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, TouchableHighlight, View, Image, Text } from 'react-native';
-import { go } from '../router';
 
 export const Blog = (props) => {
 
@@ -29,8 +29,8 @@ export const Blog = (props) => {
 };
 
 Blog.PropTypes = {
-  blog: React.PropTypes.object.isRequired,
-  style: React.PropTypes.object,
+  blog: PropTypes.object.isRequired,
+  style: PropTypes.object,
 };
 
 
